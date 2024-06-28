@@ -32,6 +32,18 @@ class Player
 		{
 			return (enable);
 		}
+
+	
+	
+		void	SET_PosX(float new_posX)
+		{
+			posX = new_posX;
+		}
+		void	SET_PosY(float new_posY)
+		{
+			posY= new_posY;
+		}
+	
 		float	GET_PosX()
 		{
 			return (posX);

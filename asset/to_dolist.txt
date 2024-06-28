@@ -1,0 +1,1 @@
+Afficher plusieurs camera, sur chaque personnage
