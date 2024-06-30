@@ -13,6 +13,9 @@ SRC			=	$(SRC_DIR)main.cpp \
 				$(SRC_DIR)game.cpp \
 				$(SRC_DIR)map.cpp \
 				$(SRC_DIR)display.cpp \
+				$(SRC_DIR)input.cpp \
+				$(SRC_DIR)frame.cpp \
+				$(SRC_DIR)player.cpp \
 
 OBJ 		= $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 

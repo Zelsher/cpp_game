@@ -1,87 +1,37 @@
 #include "../inc/game.hpp"
 
 //DrawPixel(x,y,color)
-
-int	is_wspace(char c)
+Display::Display(Player* player_list) : player(player_list), n_cam(1), width(WIDTH), height(HEIGHT)
 {
-	if (c == 32 || c == 9 || c == 13 || c == 10)
-		return (1);
-	return (0);
 }
 
-int	is_in_map(double x, double y, vector<vector<char>> *map, int max_mapY)
+void	Display::UPDATE_Display()
 {
-	if (x < 0 || y < 0)
-		return (0);
-	if ((int)y >= max_mapY
-		|| x >= map[(int)y].size())
-		return (0);
-	return (1);
+	n_cam = COUNT_Player(player);
+}
+int	Display::COUNT_Player(Player *player)
+{
+	int	i = 0;
+	while (player[i].EXIST())
+		i++;
+	return (i);
+}
+void	Display::SET_Map(vector<vector<char>> *n_map)
+{
+	map = n_map;
+	max_mapY = map->size();
+	PRINT_Map(*n_map);
 }
 
-void	draw_line(int *pixel, double *pos, int width, int s_width,
-					float scale, vector<vector<char>> *map, int max_mapY)
+void	Display::UPDATE_Image()
 {
-	int	color;
-	int	last_pos;
-	
-	while (pixel[0] <= width - s_width)
-	{
-		last_pos = (int)pos[0];
-		if (!is_in_map(pos[0], pos[1], map, max_mapY)
-			|| is_wspace((*map)[(int)pos[1]][(int)pos[0]]))
-			color = 0;
-		else if ((*map)[(int)pos[1]][(int)pos[0]] == '1')
-			color = 1;
-		else
-			color = 2;
-		while (last_pos == (int)pos[0] && pixel[0] <= width)
-		{
-			//printf("posXY[%f][%f], scale :%f\n", pos[1], pos[0], scale);
-			if (color == 0)
-				DrawPixel((int)pixel[0], (int)pixel[1], BLACK);
-			if (color == 1)
-				DrawPixel((int)pixel[0], (int)pixel[1], BLUE);
-			if (color == 2)
-				DrawPixel((int)pixel[0], (int)pixel[1], WHITE);
-			pos[0] += scale;
-			pixel[0]++;
-		}
-	}
-}
-
-void	DRAW_Background(Player *player, int width, int s_width, int height, int s_height, 
-						vector<vector<char>> *map, int max_mapY)
-{
-	int		pixel[2];
-	double 	pos[2];
-	float	scale = 0.5;
-	pos[1] = (int)player->GET_PosX() - 5;
-	pixel[1] = 0;
-	while (pixel[1] <= height - s_height)
-	{
-		pos[0] = (int)player->GET_PosY() - 5;
-		pixel[0] = 0;
-		draw_line(pixel, pos, width, s_width, scale, map, max_mapY);
-		pixel[1]++;
-		pos[1] += scale;
-		//printf("OUI\n");
-	}
-
-}
-
-void	DISPLAY_Cam(Player *player, int width, int height,
-					int id, vector<vector<char>> *map, int max_mapY)
-{
-	//(void)map;
-	//(void)max_mapY;
-	//(void)player;
-	int	s_width = 0;
-	int	s_height = 0;
-	if (id == 1)
-		s_width += width;
-	if (id == 3)
-		s_width += height;
-	DRAW_Background(player, width, s_width, height, id, map, max_mapY);
-	DrawCircle(s_width / 2, s_height / 2, 5, RED);
+	int	temp_width = width;
+	int	temp_height = height;
+	if (n_cam == 2)
+		temp_width /= 2;
+	for (int i = 0 ; i < n_cam; i++)
+		DISPLAY_Cam(&player[i], temp_width, temp_height, i, map, max_mapY);
+	HANDLE_Input(&player[0], map);
+	if (player[1].EXIST())
+		HANDLE_Input(&player[1], map);
 }

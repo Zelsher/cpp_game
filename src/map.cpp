@@ -31,7 +31,7 @@ void PRINT_Map(const vector<vector<char>>& map)
 	{
         for (char cell : ligne) 
 		{
-            cout << cell << " ";
+            cout << cell;
         }
         cout << endl;
     }
