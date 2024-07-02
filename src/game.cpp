@@ -39,6 +39,8 @@ void		Game::LOAD_Texture()
 	texture.player_2 = LoadTexture("asset/texture/Player_2.png");
 	texture.r_hand = LoadTexture("asset/texture/Right_Hand.png");
 	texture.l_hand = LoadTexture("asset/texture/Left_Hand.png");
+	texture.tile1 = LoadTexture("asset/texture/32.png");
+	texture.tile2 = LoadTexture("asset/texture/64.png");
 	texture.item[TP_RING] = LoadTexture("asset/texture/Tree_1.png");
 }
 

@@ -26,7 +26,7 @@ using namespace std;
 #include <string>
 #include "raylib.h"
 #include "player.hpp"
-#include "weapon.hpp"
+#include "item.hpp"
 #include "functions.hpp"
 
 
@@ -40,6 +40,8 @@ typedef struct s_texture
 	Texture2D	player_2;
 	Texture2D	r_hand;
 	Texture2D	l_hand;
+	Texture2D	tile1;
+	Texture2D	tile2;
 	Texture2D	item[10];
 }			t_texture;
 
@@ -47,7 +49,6 @@ class Display
 {
 	private:
 		Camera2D				camera;
-		Camera2D				camera2;
 		Player					*player;
 		t_texture				*texture;
 		vector<vector<char>>	*map;

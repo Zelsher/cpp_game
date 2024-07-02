@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include "weapon.hpp"
+#include "item.hpp"
 
 class Player
 {

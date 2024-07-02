@@ -1,1 +1,11 @@
 Afficher plusieurs camera, sur chaque personnage
+Vérifier que la tp se fait pas en dehors de la map
+Ajuster le coût en mana en fonction de la distance
+Inventaire
+Pause
+Drag and drop dans l’inventaire
+Système ditem
+Revoir le système de course
+Changement ditem avec les deux poches et la roue de souris
+Arme pistolet
+class carte?
