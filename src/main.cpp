@@ -4,8 +4,11 @@ int	main()
 {
 	Game	game;
 
-	game.ADD_Player("Bob");
-	cout << game.GET_Name_Player(0) << endl;
+	Weapon	ring;
+
+	ring.SET_Weapon(TP_RING);
+	game.ADD_Player("Suceur de naine");
+	game.GET_Player(0)->ADD_Item(&ring);
 	while (!WindowShouldClose())
 	{
 		game.UPDATE_Img();
