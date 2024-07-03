@@ -1,14 +1,10 @@
 #include "../inc/game.hpp"
 
-Player::Player()
+Player::Player() : stamina(GREEN), mana(BLUE)
 {
 	enable = 0;
-	hp = 80;
-	stamina = 100;
+	hp = 100;
 	speed = 0.1f;
-	mana = 100;
-	left_hand = NULL;
-	right_hand = NULL;
 }
 int Player::ACTIVATE_Player(string new_name, int new_id)
 {
@@ -25,45 +21,36 @@ int	Player::EXIST()
 }
 
 
-
-float	Player::GET_Hp()
-{
-	return (hp);
-}
-
-int	Player::GET_Stamina()
-{
-	return (stamina);
-}
-
-float	Player::GET_Speed()
-{
-	return (speed);
-}
-
-float	Player::GET_Mana()
-{
-	return (mana);
-}
-
 Weapon	*Player::GET_Hand(int hand)
 {
-	if (hand == RIGHT)
-		return (right_hand);
-	if (hand == LEFT)
-		return (left_hand);
-	return (NULL);
+	return (&hands[hand]);
 }
 
-
-
-void	Player::ADD_Item(Weapon *item)
+int			Player::GET_Hand_Type(int hand)
 {
-	if (!left_hand)
-		left_hand = item;
-	else if (!right_hand)
-		right_hand = item;
+	return (hands[hand].GET_Type());
 }
+
+void		Player::SWITCH_Weapon(int hand)
+{
+	Weapon temp;
+
+	temp = hands[hand];
+	hands[hand] = pocket[hand];
+	pocket[hand] = temp;
+}
+
+void	Player::ADD_Item(Weapon item)
+{
+	if (hands[LEFT].Nothing())
+		hands[LEFT] = item;
+	else if (hands[RIGHT].Nothing())
+		hands[RIGHT] = item;
+	else
+		(void)item;//put in bag
+}
+
+
 
 void	Player::SET_Dir(float x, float y)
 {
@@ -72,38 +59,21 @@ void	Player::SET_Dir(float x, float y)
 	rot = atan2(y, x) * (180 / PI) + 90;// * (100.0f / PI);
 }
 
-void	Player::SET_Stamina(float i)
+void	Player::ADD_Stamina(float i)
 {
-	if (i < 0 && stamina > 0)
-		stamina += i;
-	if (i > 0 && stamina < 100)
-		stamina += i;
+	if (i < 0 && stamina.GET_Value() > 0)
+		stamina.ADD_Value(i);
+	if (i > 0 && stamina.GET_Value() < 100)
+		stamina.ADD_Value(i);
 }
 
-void	Player::SET_Mana(float i)
+void	Player::ADD_Mana(float i)
 {
-	if (i < 0 && mana > 0)
-		mana += i;
-	if (i > 0 && mana < 100)
-		mana += i;
+	if (i < 0 && mana.GET_Value() > 0)
+		mana.ADD_Value(i);
+	if (i > 0 && mana.GET_Value() < 100)
+		mana.ADD_Value(i);
 }
-
-void	Player::SET_Pos(Vector2 pos)
-{
-		posX = pos.x;
-		posY = pos.y;
-}
-
-void	Player::SET_PosX(float new_posX)
-{
-		posX = new_posX;
-}
-void	Player::SET_PosY(float new_posY)
-{
-	posY = new_posY;
-}
-
-
 
 void	Player::ADD_PosX(float new_posX)
 {
@@ -114,20 +84,4 @@ void	Player::ADD_PosY(float new_posY)
 	posY += new_posY;
 }
 
-float	Player::GET_PosX()
-{
-	return (posX);
-}
-float	Player::GET_PosY()
-{
-	return (posY);
-}
 
-float	Player::GET_Rot()
-{
-	return (rot);
-}
-string	Player::GET_Name()
-{
-	return (name);
-}

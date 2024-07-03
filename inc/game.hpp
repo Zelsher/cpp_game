@@ -9,6 +9,7 @@ using namespace std;
 #define	TILE_SIZE 64
 
 #define	TP_RING 1
+#define PISTOL 2
 
 #define	RIGHT 1
 #define	LEFT 0
@@ -91,12 +92,12 @@ class Game
 		void	UPDATE_Img();
 		
 		int 	ADD_Player(string name);
-		float 	PLAYER_PosX(int id);
-		float 	PLAYER_PosY(int id);
-		float 	PLAYER_Dir(int id);
-		string	GET_Name_Player(int id);
+		float 	PLAYER_PosX(int id) const {return (player[id].GET_PosX()); }
+		float 	PLAYER_PosY(int id) const {return (player[id].GET_PosY()); }
+		float 	PLAYER_Dir(int id) const {return (player[id].GET_Rot());}
+		string	GET_Name_Player(int id) const { return player[id].GET_Name(); }
 
-		Player	*GET_Player(int id);
+		Player	*GET_Player(int id) {return (&player[id]); }
 };
 
 

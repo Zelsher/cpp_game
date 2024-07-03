@@ -3,15 +3,20 @@
 
 #include "game.hpp"
 
-class ressource
+class Ressource
 {
 	private:
-		int	value;
-		int	color;
+		float	value;
+		Color	color;
 
 	public:
-		ressource();
-		~ressource();
+		Ressource(Color n_color);
+		~Ressource();
+
+	void	ADD_Value(float i) { value += i; }
+	float	GET_Value() const { return value; }
+	Color	GET_Color() const { return color; }
+
 };
 
 
@@ -19,15 +24,22 @@ class ressource
 class Weapon
 {
 	private:
-		int		type;
-		float	damage;
-		float	*ressource;
-		Color	color_bar;
+		bool		nothing;
+		int			type;
+		float		damage;
+		Ressource	*ressource;
+		Color		color_bar;
 	public:
 		Weapon();
-		void	SET_Weapon(int w_type);
-		int		GET_Type();
-		int		GET_Color();
+		~Weapon();
+		void	SET_Weapon(int w_type, Ressource *Ressource);
+		
+		int		GET_Type() { return(type); }
+		Color	GET_Color() { return(ressource->GET_Color()); }
+		
+		Ressource	*GET_Ressource() { return(ressource); }
+
+		bool	Nothing() { return(nothing); }
 };
 
 

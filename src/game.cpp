@@ -41,7 +41,8 @@ void		Game::LOAD_Texture()
 	texture.l_hand = LoadTexture("asset/texture/Left_Hand.png");
 	texture.tile1 = LoadTexture("asset/texture/32.png");
 	texture.tile2 = LoadTexture("asset/texture/64.png");
-	texture.item[TP_RING] = LoadTexture("asset/texture/Tree_1.png");
+	texture.item[TP_RING] = LoadTexture("asset/texture/Tp_Ring.png");
+	texture.item[PISTOL] = LoadTexture("asset/texture/Pistol.png");
 }
 
 int Game::ADD_Player(string name)
@@ -66,29 +67,7 @@ void	Game::UPDATE_Img()
 	display.UPDATE_Image();
 }
 
-float Game::PLAYER_PosX(int id)
-{
-	return (player[id].GET_PosX());
-}
-float Game::PLAYER_PosY(int id)
-{
-	return (player[id].GET_PosY());
-}
 
-float Game::PLAYER_Dir(int id)
-{
-	return (player[id].GET_Rot());
-}
-
-string	Game::GET_Name_Player(int id)
-{
-	return (player[id].GET_Name());
-}
-
-Player	*Game::GET_Player(int id)
-{
-	return (&player[id]);
-}
 
 //Display
 

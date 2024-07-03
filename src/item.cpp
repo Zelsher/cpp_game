@@ -1,26 +1,29 @@
 #include "../inc/game.hpp"
 
-ressource::ressource()
+Ressource::Ressource(Color n_color)
 {
-	}
-
-ressource::~ressource()
-{
+	value = 100.0f;
+	color = n_color;
 }
 
-Weapon::Weapon()
+Ressource::~Ressource()
 {
-	type = 0;
 }
-void	Weapon::SET_Weapon(int w_type)
+
+Weapon::Weapon() : nothing(1), type(0)
 {
-	(void)w_type;
 }
-int	Weapon::GET_Type()
+
+Weapon::~Weapon()
 {
-	return(type);
 }
-int	Weapon::GET_Color()
+
+void	Weapon::SET_Weapon(int w_type, Ressource *n_ressource)
 {
-	return(type);
+	if (n_ressource)
+		ressource = n_ressource;
+	else
+		ressource = NULL;
+	type = w_type;
+	nothing = 0;
 }

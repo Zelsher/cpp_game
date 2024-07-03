@@ -19,16 +19,22 @@ void	Game::HANDLE_Click(Vector2 position, int id, int hand)
 	Weapon *weapon;
 
 	weapon = player[id].GET_Hand(hand);
-
-	if (hand == RIGHT)
-		cout << "here" << player[id].GET_Hand(hand) << endl;
 	//cout << "Clicked at" << position.y / TILE_SIZE << " " << position.x / TILE_SIZE << endl;
-	if (weapon->GET_Type() && weapon->GET_Type() == TP_RING && player[id].GET_Mana() > 66)
+	if (!weapon->Nothing())
 	{
-		position.x /= TILE_SIZE;
-		position.y /= TILE_SIZE;
-		player[id].SET_Pos(position);
-		player[id].SET_Mana(-66);
+		if (weapon->GET_Type() == TP_RING && player[id].GET_Mana_V() > 66 &&
+			moove_player_valid(&map, position.x / TILE_SIZE, position.y / TILE_SIZE))
+		{
+			position.x /= TILE_SIZE;
+			position.y /= TILE_SIZE;
+			player[id].SET_Pos(position);
+			player[id].ADD_Mana(-66);
+		}
+		if (weapon->GET_Type() == PISTOL)
+		{
+			(void)weapon;
+			//weapon->ADD_Ressource(-20);
+		}
 	}
 }
 
@@ -45,14 +51,14 @@ int	MOOVING()
 void	Game::HANDLE_Input(int id)
 {
 	float m_speed = player[id].GET_Speed();
-	if (IsKeyDown(KEY_LEFT_SHIFT) && player[id].GET_Stamina() > 0 && MOOVING())
+	if (IsKeyDown(KEY_LEFT_SHIFT) && player[id].GET_Stamina_V() > 0 && MOOVING())
 	{
 		m_speed *= 2;
-		player[id].SET_Stamina(-1);
+		player[id].ADD_Stamina(-1);
 	}
 	else
-		player[id].SET_Stamina(1);
-	player[id].SET_Mana(0.2);
+		player[id].ADD_Stamina(1);
+	player[id].ADD_Mana(0.3);
 
 	if (IsKeyReleased(KEY_SPACE))
 		(void)player;//pause
@@ -70,7 +76,11 @@ void	Game::HANDLE_Input(int id)
 		HANDLE_Click(mouse_pos, id, LEFT);
 	if (IsMouseButtonDown(1))
 		HANDLE_Click(mouse_pos, id, RIGHT);
-	
+
+	if (GetMouseWheelMove() < 0)
+		player[id].SWITCH_Weapon(RIGHT);
+	if (GetMouseWheelMove() > 0)
+		player[id].SWITCH_Weapon(LEFT);
 	display.GET_Camera(id)->target = (Vector2){(player[id].GET_PosX() * TILE_SIZE - WIDTH / 3), (player[id].GET_PosY() * TILE_SIZE - HEIGHT / 3)};
 	player[id].SET_Dir(mouse_pos.x / TILE_SIZE - player[id].GET_PosX(), mouse_pos.y / TILE_SIZE - player[id].GET_PosY());
 }
