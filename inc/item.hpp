@@ -13,7 +13,7 @@ class Ressource
 		Ressource(Color n_color);
 		~Ressource();
 
-	void	ADD_Value(float i) { value += i; }
+	void	ADD_Value(float i);
 	float	GET_Value() const { return value; }
 	Color	GET_Color() const { return color; }
 

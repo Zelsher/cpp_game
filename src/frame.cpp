@@ -17,8 +17,6 @@ void	Display::DRAW_Background()
 				DrawTexture(texture->ground_1, x * TILE_SIZE, y * TILE_SIZE, WHITE);
 				DrawTexture(texture->tree_1, x * TILE_SIZE, y * TILE_SIZE, WHITE);
 			}
-			//cout << x << " " << map_width << y << endl;
-			//cout << "oui\n";
 		}
 	}
   	

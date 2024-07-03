@@ -33,7 +33,7 @@ void	Display::SET_Map(vector<vector<char>> *n_map, t_texture *map_texture, int w
 	map = n_map;
 	map_width = width;
 	map_height = height;
-	PRINT_Map(*n_map);
+	//PRINT_Map(*n_map);
 }
 
 void	Display::UPDATE_Image()

@@ -62,9 +62,12 @@ int Game::ADD_Player(string name)
 void	Game::UPDATE_Img()
 {
 	HANDLE_Input(0);
+
 	if (player[1].EXIST())
 		HANDLE_Input(1);
 	display.UPDATE_Image();
+	//if (backpack_mod)
+	//	display.DISPLAY_Backpack();
 }
 
 

@@ -3,14 +3,13 @@
 
 int	moove_player_valid(vector<vector<char>> *map, float X, float Y)
 {
-	//cout << "posYX[" << Y << "][" << X << "] " << (*map)[(int)Y][(int)X] << endl;
 	if (X < 0 || Y < 0)
 		return (0);
 	if ((*map).size() < Y || (*map)[(int)Y].size() < X)
 		return (0);
 	if ((*map)[(int)Y][(int)X] == '1')
 		return (0);
-	cout << (*map)[(int)Y][(int)X] << endl;
+	//cout << (*map)[(int)Y][(int)X] << endl;
 	return (1);
 }
 
@@ -33,7 +32,7 @@ void	Game::HANDLE_Click(Vector2 position, int id, int hand)
 		if (weapon->GET_Type() == PISTOL)
 		{
 			(void)weapon;
-			//weapon->ADD_Ressource(-20);
+			weapon->GET_Ressource()->ADD_Value(-20);
 		}
 	}
 }
@@ -72,15 +71,20 @@ void	Game::HANDLE_Input(int id)
 		player[id].ADD_PosY(m_speed);
 	
 	Vector2 mouse_pos = GetScreenToWorld2D(GetMousePosition(), *display.GET_Camera(id));
-	if (IsMouseButtonDown(0))
+	if (IsMouseButtonPressed(0))
 		HANDLE_Click(mouse_pos, id, LEFT);
-	if (IsMouseButtonDown(1))
+	if (IsMouseButtonPressed(1))
 		HANDLE_Click(mouse_pos, id, RIGHT);
 
 	if (GetMouseWheelMove() < 0)
 		player[id].SWITCH_Weapon(RIGHT);
 	if (GetMouseWheelMove() > 0)
 		player[id].SWITCH_Weapon(LEFT);
+
+	if (IsKeyPressed(KEY_R))
+	{
+		player[id].RELOAD_Weapons();
+	}
 	display.GET_Camera(id)->target = (Vector2){(player[id].GET_PosX() * TILE_SIZE - WIDTH / 3), (player[id].GET_PosY() * TILE_SIZE - HEIGHT / 3)};
 	player[id].SET_Dir(mouse_pos.x / TILE_SIZE - player[id].GET_PosX(), mouse_pos.y / TILE_SIZE - player[id].GET_PosY());
 }

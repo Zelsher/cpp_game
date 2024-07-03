@@ -41,6 +41,7 @@ class Player
 		Weapon		*GET_Hand(int hand);
 		int			GET_Hand_Type(int hand);
 		void		SWITCH_Weapon(int hand);
+		void		RELOAD_Weapons();
 
 		Ressource	GET_Stamina() const { return stamina; }
 		Ressource	GET_Mana() const { return mana; }

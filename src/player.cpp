@@ -40,6 +40,15 @@ void		Player::SWITCH_Weapon(int hand)
 	pocket[hand] = temp;
 }
 
+void		Player::RELOAD_Weapons()
+{
+	
+	if (GET_Hand(RIGHT)->GET_Type() == PISTOL && GET_Hand(RIGHT)->GET_Ressource()->GET_Value() < 100)
+		GET_Hand(RIGHT)->GET_Ressource()->ADD_Value(20);
+	if (GET_Hand(LEFT)->GET_Type() == PISTOL && GET_Hand(LEFT)->GET_Ressource()->GET_Value() < 100)
+		GET_Hand(LEFT)->GET_Ressource()->ADD_Value(20);
+}
+
 void	Player::ADD_Item(Weapon item)
 {
 	if (hands[LEFT].Nothing())
