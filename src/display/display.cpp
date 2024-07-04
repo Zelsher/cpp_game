@@ -1,4 +1,4 @@
-#include "../inc/game.hpp"
+#include "../../inc/game.hpp"
 
 //DrawPixel(x,y,color)
 Display::Display(Player* player_list) : player(player_list), n_cam(1), width(WIDTH), height(HEIGHT), display_size({WIDTH / TILE_SIZE, HEIGHT / TILE_SIZE})
@@ -108,13 +108,9 @@ void	Display::DISPLAY_Game(int id)
 
 	DRAW_Background();
 	DRAW_Player(id);
+	//DrawFPS(player[id].GET_PosX() * TILE_SIZE + WIDTH / 2, player[id].GET_PosY() * TILE_SIZE - HEIGHT / 2);
 
 	EndMode2D();
 	EndDrawing();
 }
 
-Camera2D	*Display::GET_Camera(int id)
-{
-	(void)id;
-	return (&camera);
-}

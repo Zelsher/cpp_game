@@ -1,4 +1,4 @@
-#include "../inc/game.hpp"
+#include "../../inc/game.hpp"
 
 
 void	Display::DRAW_Background()

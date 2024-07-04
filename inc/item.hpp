@@ -6,6 +6,12 @@
 
 #include "player.hpp"
 
+typedef struct s_audio
+{
+	Sound	reload;
+	Sound	end_reload;
+}			t_audio;
+
 class Ressource
 {
 	private:
@@ -40,6 +46,8 @@ class Weapon
 		int			reload;
 		int			cooldown_time;
 		int			cooldown;
+
+		t_audio		audio;
 	public:
 		Weapon();
 		~Weapon();

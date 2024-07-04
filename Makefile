@@ -1,7 +1,14 @@
 NAME		= game
 
 INC			= inc/
+
 SRC_DIR		= src/
+GAME_DIR	= src/game/
+DISPLAY_DIR	= src/display/
+PLAYER_DIR	= src/player/
+ITEM_DIR	= src/item/
+MAP_DIR		= src/map/
+
 OBJ_DIR		= obj/
 RAYLIB_LIB	= -lraylib
 CC			= c++
@@ -9,15 +16,17 @@ CFLAGS		= -Wall -Wextra -Werror -std=c++11 -I$(INC)
 
 RM			= rm -f
 
-SRC			=	$(SRC_DIR)main.cpp \
-				$(SRC_DIR)game.cpp \
-				$(SRC_DIR)map.cpp \
-				$(SRC_DIR)display.cpp \
-				$(SRC_DIR)input.cpp \
-				$(SRC_DIR)frame.cpp \
-				$(SRC_DIR)player.cpp \
-				$(SRC_DIR)item.cpp \
-				$(SRC_DIR)item_use.cpp \
+SRC			=	$(GAME_DIR)main.cpp \
+				$(GAME_DIR)game.cpp \
+				$(GAME_DIR)input.cpp \
+				$(DISPLAY_DIR)display.cpp \
+				$(DISPLAY_DIR)frame.cpp \
+				$(PLAYER_DIR)player.cpp \
+				$(PLAYER_DIR)player_utils.cpp \
+				$(ITEM_DIR)item.cpp \
+				$(ITEM_DIR)item_use.cpp \
+				$(ITEM_DIR)ressource.cpp \
+				$(MAP_DIR)map.cpp \
 
 OBJ 		= $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 

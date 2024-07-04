@@ -1,4 +1,4 @@
-#include "../inc/game.hpp"
+#include "../../inc/game.hpp"
 
 //si un item a commencer un reload ou un cd, il lincremente, si il la finit, il le remet a 0
 void	Weapon::UPDATE_Item()
@@ -9,26 +9,26 @@ void	Weapon::UPDATE_Item()
 	if (reload_time && reload == reload_time)
 	{
 		reload = 0;
+		PlaySound(audio.end_reload);
 		GET_Ressource()->SET_Value(100);
 	}
-	else if (reload_time && reload)
+	else if (reload)
 		reload++;
 
 	if (cooldown_time && cooldown == cooldown_time)
 		cooldown = 0;
-	else if (cooldown_time && cooldown)
+	else if (cooldown)
 		cooldown++;
 }
 
 void	Weapon::RELOAD()
 {
-	cout << "PRERELOAD" << endl;
 	if (ressource_type == MANA)
 		return;
-	if (reload_time && reload < reload_time)
+	if (reload_time && !RELOADING())
 	{
 		reload++;
-		cout << "RELOAD" << endl;
+		PlaySound(audio.reload);
 	}
 }
 
@@ -39,8 +39,8 @@ int	Weapon::RELOADING()
 
 void	Weapon::COOLDOWN()
 {
-	cout << "CD" << endl;
-	if (cooldown_time && cooldown < cooldown_time)
+	//cout << cooldown_time << endl;
+	if (cooldown_time && !cooldown)
 		cooldown++;
 }
 
@@ -53,29 +53,30 @@ int	Weapon::IS_Cooldown()
 void	Weapon::USE(Vector2 player_pos, Vector2 use_pos, Player *player, vector<vector<char>> *map)
 {
 
-	if (empty || !type || reload)
-	{
-		cout << "UNVALID" << endl;
+	if (empty || !type || reload || cooldown)
 		return;
-	}
+	//cout << cooldown << endl;
 	if (type == TP_RING)
 	{
-		cout << "USE" << endl;
-		(void)player_pos;
-		int	cost = 66;//calculer le cout en fonction de la distance
+		int	cost = sqrt(pow(player_pos.x - use_pos.x, 2) + pow(player_pos.y - use_pos.y, 2)) / TILE_SIZE;
+		//cout << "cost" << cost << endl;
 
 		if (player->GET_Mana_V() > cost && 
 			moove_player_valid(map, use_pos.x / TILE_SIZE, use_pos.y / TILE_SIZE))
 		{
 			use_pos.x /= TILE_SIZE;
 			use_pos.y /= TILE_SIZE;
-			player->ADD_Mana(-66);
+			player->ADD_Mana(-cost);
 			player->SET_Pos(use_pos);
 		}
 	}
-	if ((type == PISTOL || type == UZI))
+	else if (type == MAGIC_STICK)
 	{
-		cout << "USE" << endl;
+		GET_Ressource()->ADD_Value(-20);
+		COOLDOWN();
+	}
+	else if ((type == PISTOL || type == UZI))
+	{
 		if (type == PISTOL)
 			GET_Ressource()->ADD_Value(-10);
 		if (type == UZI)

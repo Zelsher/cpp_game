@@ -1,4 +1,4 @@
-#include "../inc/game.hpp"
+#include "../../inc/game.hpp"
 
 
 int	moove_player_valid(vector<vector<char>> *map, float X, float Y)
@@ -31,6 +31,8 @@ void	Game::HANDLE_Input(int id)
 		m_speed *= 1.5f;
 		player[id].RUN();
 	}
+	else
+		player[id].STOP_Run();
 	if (player[id].GET_Stamina_V() <= 0)
 		player[id].STOP_Run();
 

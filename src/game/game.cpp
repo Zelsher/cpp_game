@@ -1,12 +1,13 @@
-#include "../inc/game.hpp"
+#include "../../inc/game.hpp"
 
 //Game
 
 Game::Game() : display(player)
 {
 	InitWindow(WIDTH, HEIGHT, "game");
-	SetTargetFPS(60);
 	ClearBackground(BLACK);
+	SetTargetFPS(60);
+	InitAudioDevice();
 	CHOSE_Lvl();
 }
 
@@ -42,6 +43,7 @@ void		Game::LOAD_Texture()
 	texture.tile1 = LoadTexture("asset/texture/32.png");
 	texture.tile2 = LoadTexture("asset/texture/64.png");
 	texture.item[TP_RING] = LoadTexture("asset/texture/Tp_Ring.png");
+	texture.item[MAGIC_STICK] = LoadTexture("asset/texture/Magic_Stick.png");
 	texture.item[PISTOL] = LoadTexture("asset/texture/Pistol.png");
 	texture.item[UZI] = LoadTexture("asset/texture/Uzi.png");
 }

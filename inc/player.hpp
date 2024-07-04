@@ -9,9 +9,9 @@
 class Player
 {
 	private:
-		int		enable;
 		int		id;
 		string	name;
+		bool	enable;
 
 		float	posY;
 		float	posX;
@@ -31,7 +31,7 @@ class Player
 	
 		int 	ACTIVATE_Player(string new_name, int new_id);
 		void	UPDATE_Items();
-		int		EXIST();
+		bool	EXIST() const { return (enable); }
 	
 		void	SET_Pos(Vector2 pos) {	posX = pos.x;posY = pos.y; }
 		void	SET_PosX(float new_posX) { posX = new_posX; }

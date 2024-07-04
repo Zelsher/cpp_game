@@ -9,8 +9,9 @@ using namespace std;
 #define	TILE_SIZE 64
 
 #define	TP_RING 1
-#define PISTOL 2
-#define UZI 3
+#define	MAGIC_STICK 2
+#define PISTOL 3
+#define UZI 4
 
 #define MANA 1
 #define AMMO 2
@@ -50,6 +51,7 @@ typedef struct s_texture
 	Texture2D	item[10];
 }			t_texture;
 
+
 class Display
 {
 	private:
@@ -75,7 +77,7 @@ class Display
 		int			COUNT_Player(Player *player);
 		void		SET_Camera();
 		void		SET_Map(vector<vector<char>> *n_map, t_texture *map_texure, int width, int height);
-		Camera2D	*GET_Camera(int id);
+		Camera2D	*GET_Camera(int id) { (void)id; return (&camera); }
 };
 
 class Game
