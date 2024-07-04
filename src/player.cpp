@@ -1,6 +1,6 @@
 #include "../inc/game.hpp"
 
-Player::Player() : stamina(GREEN), mana(BLUE)
+Player::Player() : run(0), stamina(GREEN), mana(BLUE)
 {
 	enable = 0;
 	hp = 100;
@@ -14,12 +14,27 @@ int Player::ACTIVATE_Player(string new_name, int new_id)
 	//fill pos
 	return (0);
 }
+
+void	Player::UPDATE_Items()
+{
+	//cout << "mana" << mana.GET_Value() << endl;
+	hands[0].UPDATE_Item();
+	hands[1].UPDATE_Item();
+	pocket[0].UPDATE_Item();
+	pocket[1].UPDATE_Item();
+	if (mana.GET_Value() < 100)
+		mana.ADD_Value(0.4f);
+
+	if (stamina.GET_Value() < 100 && !run)
+		stamina.ADD_Value(1);
+	else if (run)
+		stamina.ADD_Value(-1);
+}
 	
 int	Player::EXIST()
 {
 	return (enable);
 }
-
 
 Weapon	*Player::GET_Hand(int hand)
 {
@@ -44,19 +59,21 @@ void		Player::RELOAD_Weapons()
 {
 	
 	if (GET_Hand(RIGHT)->GET_Type() == PISTOL && GET_Hand(RIGHT)->GET_Ressource()->GET_Value() < 100)
-		GET_Hand(RIGHT)->GET_Ressource()->ADD_Value(20);
+		GET_Hand(RIGHT)->RELOAD();
 	if (GET_Hand(LEFT)->GET_Type() == PISTOL && GET_Hand(LEFT)->GET_Ressource()->GET_Value() < 100)
-		GET_Hand(LEFT)->GET_Ressource()->ADD_Value(20);
+		GET_Hand(LEFT)->RELOAD();
 }
 
 void	Player::ADD_Item(Weapon item)
 {
-	if (hands[LEFT].Nothing())
+	if (hands[LEFT].EMPTY())
 		hands[LEFT] = item;
-	else if (hands[RIGHT].Nothing())
+	else if (hands[RIGHT].EMPTY())
 		hands[RIGHT] = item;
-	else
-		(void)item;//put in bag
+	else if (pocket[LEFT].EMPTY())
+		pocket[LEFT] = item;
+	else if (pocket[RIGHT].EMPTY())
+		pocket[RIGHT] = item;
 }
 
 

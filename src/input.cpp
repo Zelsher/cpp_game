@@ -13,30 +13,6 @@ int	moove_player_valid(vector<vector<char>> *map, float X, float Y)
 	return (1);
 }
 
-void	Game::HANDLE_Click(Vector2 position, int id, int hand)
-{
-	Weapon *weapon;
-
-	weapon = player[id].GET_Hand(hand);
-	//cout << "Clicked at" << position.y / TILE_SIZE << " " << position.x / TILE_SIZE << endl;
-	if (!weapon->Nothing())
-	{
-		if (weapon->GET_Type() == TP_RING && player[id].GET_Mana_V() > 66 &&
-			moove_player_valid(&map, position.x / TILE_SIZE, position.y / TILE_SIZE))
-		{
-			position.x /= TILE_SIZE;
-			position.y /= TILE_SIZE;
-			player[id].SET_Pos(position);
-			player[id].ADD_Mana(-66);
-		}
-		if (weapon->GET_Type() == PISTOL)
-		{
-			(void)weapon;
-			weapon->GET_Ressource()->ADD_Value(-20);
-		}
-	}
-}
-
 int	MOOVING()
 {
 	if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_RIGHT)
@@ -52,12 +28,11 @@ void	Game::HANDLE_Input(int id)
 	float m_speed = player[id].GET_Speed();
 	if (IsKeyDown(KEY_LEFT_SHIFT) && player[id].GET_Stamina_V() > 0 && MOOVING())
 	{
-		m_speed *= 2;
-		player[id].ADD_Stamina(-1);
+		m_speed *= 1.5f;
+		player[id].RUN();
 	}
 	else
-		player[id].ADD_Stamina(1);
-	player[id].ADD_Mana(0.3);
+		player[id].STOP_Run();
 
 	if (IsKeyReleased(KEY_SPACE))
 		(void)player;//pause
@@ -69,19 +44,21 @@ void	Game::HANDLE_Input(int id)
 		player[id].ADD_PosY(-m_speed);
 	if ((IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) && moove_player_valid(&map, player[id].GET_PosX(), player[id].GET_PosY() + m_speed * 2))
 		player[id].ADD_PosY(m_speed);
-	
-	Vector2 mouse_pos = GetScreenToWorld2D(GetMousePosition(), *display.GET_Camera(id));
-	if (IsMouseButtonPressed(0))
-		HANDLE_Click(mouse_pos, id, LEFT);
-	if (IsMouseButtonPressed(1))
-		HANDLE_Click(mouse_pos, id, RIGHT);
 
+//Handle Mouse Click
+	Vector2 mouse_pos = GetScreenToWorld2D(GetMousePosition(), *display.GET_Camera(id));
+	if (IsMouseButtonDown(0))
+		player[id].GET_Hand(LEFT)->USE(player[id].GET_Pos(), mouse_pos, &player[id], &map);
+	if (IsMouseButtonDown(1))
+		player[id].GET_Hand(RIGHT)->USE(player[id].GET_Pos(), mouse_pos, &player[id], &map);
+
+//Handle Mouse Wheel
 	if (GetMouseWheelMove() < 0)
 		player[id].SWITCH_Weapon(RIGHT);
 	if (GetMouseWheelMove() > 0)
 		player[id].SWITCH_Weapon(LEFT);
 
-	if (IsKeyPressed(KEY_R))
+	if (IsKeyDown(KEY_R))
 	{
 		player[id].RELOAD_Weapons();
 	}

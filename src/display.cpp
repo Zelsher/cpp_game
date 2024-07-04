@@ -1,7 +1,7 @@
 #include "../inc/game.hpp"
 
 //DrawPixel(x,y,color)
-Display::Display(Player* player_list) : player(player_list), n_cam(1), width(WIDTH), height(HEIGHT) 
+Display::Display(Player* player_list) : player(player_list), n_cam(1), width(WIDTH), height(HEIGHT), display_size({WIDTH / TILE_SIZE, HEIGHT / TILE_SIZE})
 {
 	SET_Camera();
 }
@@ -38,9 +38,9 @@ void	Display::SET_Map(vector<vector<char>> *n_map, t_texture *map_texture, int w
 
 void	Display::UPDATE_Image()
 {
-	DISPLAY_Cam(0);
+	DISPLAY_Game(0);
 	if (player[1].EXIST())
-		DISPLAY_Cam(1);
+		DISPLAY_Game(1);
 }
 
 void	Display::DRAW_Player(int id)
@@ -65,7 +65,7 @@ void	Display::DRAW_Player(int id)
 	DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE *0.75, staminabar, TILE_SIZE / 10, GREEN);
 	
 	//Draw left and right hand icons, and there ressources
-	if (!player[id].GET_Hand(LEFT)->Nothing())//Left
+	if (!player[id].GET_Hand(LEFT)->EMPTY())//Left
 	{
 		DrawTexture(texture->item[player[id].GET_Hand(LEFT)->GET_Type()], player[id].GET_PosX() * TILE_SIZE - TILE_SIZE,
 			player[id].GET_PosY() * TILE_SIZE - TILE_SIZE, WHITE);
@@ -81,8 +81,7 @@ void	Display::DRAW_Player(int id)
 		DrawTexture(texture->l_hand, player[id].GET_PosX() * TILE_SIZE - TILE_SIZE * 1,
 			player[id].GET_PosY() * TILE_SIZE - TILE_SIZE, WHITE);
 
-
-	if (!player[id].GET_Hand(RIGHT)->Nothing())//right
+	if (!player[id].GET_Hand(RIGHT)->EMPTY())//right
 	{
 		DrawTexture(texture->item[player[id].GET_Hand(RIGHT)->GET_Type()], player[id].GET_PosX() * TILE_SIZE + TILE_SIZE / 2,
 			player[id].GET_PosY() * TILE_SIZE - TILE_SIZE, WHITE);
@@ -100,7 +99,7 @@ void	Display::DRAW_Player(int id)
 
 }
 
-void	Display::DISPLAY_Cam(int id)
+void	Display::DISPLAY_Game(int id)
 {
 	//cout << "posYX[" << player[id].GET_PosY() << "][" << player[id].GET_PosX() << "] " << (*map)[(int)player[id].GET_PosY()][(int)player[id].GET_PosX()] << endl;
 	BeginDrawing();

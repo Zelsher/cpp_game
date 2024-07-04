@@ -17,6 +17,7 @@ SRC			=	$(SRC_DIR)main.cpp \
 				$(SRC_DIR)frame.cpp \
 				$(SRC_DIR)player.cpp \
 				$(SRC_DIR)item.cpp \
+				$(SRC_DIR)item_use.cpp \
 
 OBJ 		= $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 

@@ -3,13 +3,17 @@
 
 using namespace std;
 
-#define WIDTH 1920
-#define HEIGHT 1080
+#define WIDTH 3440
+#define HEIGHT 1440
 
 #define	TILE_SIZE 64
 
 #define	TP_RING 1
 #define PISTOL 2
+#define UZI 3
+
+#define MANA 1
+#define AMMO 2
 
 #define	RIGHT 1
 #define	LEFT 0
@@ -53,9 +57,11 @@ class Display
 		Player					*player;
 		t_texture				*texture;
 		vector<vector<char>>	*map;
+
 		int						n_cam;
 		int						width;
 		int						height;
+		Vector2					display_size;//taille du fond afficher
 		int						map_width;
 		int						map_height;
 		
@@ -63,7 +69,7 @@ class Display
 		Display(Player* player_list);
 		void		DRAW_Background();
 		void		DRAW_Player(int id);
-		void		DISPLAY_Cam(int id);
+		void		DISPLAY_Game(int id);
 		void		UPDATE_Image();
 		void		UPDATE_Display();
 		int			COUNT_Player(Player *player);
@@ -89,7 +95,7 @@ class Game
 
 		void	HANDLE_Input(int id);
 		void	HANDLE_Click(Vector2 position, int id, int hand);
-		void	UPDATE_Img();
+		void	UPDATE_Game();
 		
 		int 	ADD_Player(string name);
 		float 	PLAYER_PosX(int id) const {return (player[id].GET_PosX()); }

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+
 #include "item.hpp"
 
 class Player
@@ -11,21 +12,26 @@ class Player
 		int		enable;
 		int		id;
 		string	name;
+
 		float	posY;
 		float	posX;
 		Vector2	dir;
 		float	rot;
+
+		bool	run;
 		float	hp;
 		float	speed;
 		Ressource	stamina;
 		Ressource	mana;
+
 		Weapon		hands[2];
 		Weapon		pocket[2];
 	public:
 		Player();
 	
-		int ACTIVATE_Player(string new_name, int new_id);
-		int	EXIST();
+		int 	ACTIVATE_Player(string new_name, int new_id);
+		void	UPDATE_Items();
+		int		EXIST();
 	
 		void	SET_Pos(Vector2 pos) {	posX = pos.x;posY = pos.y; }
 		void	SET_PosX(float new_posX) { posX = new_posX; }
@@ -43,6 +49,9 @@ class Player
 		void		SWITCH_Weapon(int hand);
 		void		RELOAD_Weapons();
 
+		void		RUN() { run = 1; }
+		void		STOP_Run() { run = 0; }
+
 		Ressource	GET_Stamina() const { return stamina; }
 		Ressource	GET_Mana() const { return mana; }
 		Ressource	*GET_Mana_p() { return &mana; }
@@ -51,6 +60,7 @@ class Player
 
 		float		GET_Speed() const { return speed; }
 		float		GET_Hp() const { return hp; }
+		Vector2		GET_Pos() const { return {posX, posY}; }
 		float		GET_PosX() const { return posX; }
 		float		GET_PosY() const { return posY; }
 		float		GET_Rot() const { return rot; }

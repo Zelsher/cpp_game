@@ -43,6 +43,7 @@ void		Game::LOAD_Texture()
 	texture.tile2 = LoadTexture("asset/texture/64.png");
 	texture.item[TP_RING] = LoadTexture("asset/texture/Tp_Ring.png");
 	texture.item[PISTOL] = LoadTexture("asset/texture/Pistol.png");
+	texture.item[UZI] = LoadTexture("asset/texture/Uzi.png");
 }
 
 int Game::ADD_Player(string name)
@@ -59,12 +60,10 @@ int Game::ADD_Player(string name)
 	display.UPDATE_Display();
 }
 
-void	Game::UPDATE_Img()
+void	Game::UPDATE_Game()
 {
 	HANDLE_Input(0);
-
-	if (player[1].EXIST())
-		HANDLE_Input(1);
+	player[0].UPDATE_Items();
 	display.UPDATE_Image();
 	//if (backpack_mod)
 	//	display.DISPLAY_Backpack();

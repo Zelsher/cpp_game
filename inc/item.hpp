@@ -1,7 +1,10 @@
 #ifndef ITEM_HPP
 # define ITEM_HPP
 
-#include "game.hpp"
+#include <iostream>
+#include <string>
+
+#include "player.hpp"
 
 class Ressource
 {
@@ -14,21 +17,29 @@ class Ressource
 		~Ressource();
 
 	void	ADD_Value(float i);
+	void	SET_Value(float i) { value = i; }
 	float	GET_Value() const { return value; }
 	Color	GET_Color() const { return color; }
 
 };
 
-
+class Player;
 
 class Weapon
 {
 	private:
-		bool		nothing;
+		bool		empty;
 		int			type;
 		float		damage;
+
+		int			ressource_type;
 		Ressource	*ressource;
 		Color		color_bar;
+
+		int			reload_time;
+		int			reload;
+		int			cooldown_time;
+		int			cooldown;
 	public:
 		Weapon();
 		~Weapon();
@@ -39,7 +50,14 @@ class Weapon
 		
 		Ressource	*GET_Ressource() { return(ressource); }
 
-		bool	Nothing() { return(nothing); }
+		void		UPDATE_Item();
+		void		RELOAD();
+		int			RELOADING();
+		void		COOLDOWN();
+		int			IS_Cooldown();
+		void		USE(Vector2 player_pos, Vector2 use_pos, Player *t_player, vector<vector<char>> *map);
+	
+		bool		EMPTY() { return(empty); }
 };
 
 
