@@ -9,6 +9,7 @@ Game::Game() : display(player)
 	SetTargetFPS(60);
 	InitAudioDevice();
 	CHOSE_Lvl();
+	display.SET_Event(&event);
 }
 
 Game::~Game()
@@ -43,7 +44,7 @@ void		Game::LOAD_Texture()
 	texture.tile1 = LoadTexture("asset/texture/32.png");
 	texture.tile2 = LoadTexture("asset/texture/64.png");
 	texture.item[TP_RING] = LoadTexture("asset/texture/Tp_Ring.png");
-	texture.item[MAGIC_STICK] = LoadTexture("asset/texture/Magic_Stick.png");
+	texture.item[MAGIC_STICK] = LoadTexture("asset/texture/32.png");
 	texture.item[PISTOL] = LoadTexture("asset/texture/Pistol.png");
 	texture.item[UZI] = LoadTexture("asset/texture/Uzi.png");
 }
@@ -65,10 +66,15 @@ int Game::ADD_Player(string name)
 void	Game::UPDATE_Game()
 {
 	HANDLE_Input(0);
+
 	player[0].UPDATE_Items();
+
 	display.UPDATE_Image();
-	//if (backpack_mod)
-	//	display.DISPLAY_Backpack();
+
+	//event.UPDATE_EVENTS();
+
+	if (player[0].IS_Inventory_Open())
+		(void)player[0];
 }
 
 

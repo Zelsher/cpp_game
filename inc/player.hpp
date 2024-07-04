@@ -4,7 +4,19 @@
 #include <iostream>
 #include <string>
 
+#include "game.hpp"
 #include "item.hpp"
+
+class Inventory
+{
+	private:
+		Item	cell[4];
+	public:
+		Inventory();
+		~Inventory();
+
+		int	OPENED() { return 1; }
+};
 
 class Player
 {
@@ -24,8 +36,11 @@ class Player
 		Ressource	stamina;
 		Ressource	mana;
 
-		Weapon		hands[2];
-		Weapon		pocket[2];
+		Item		hands[2];
+		Item		pocket[2];
+		Inventory	inventory;
+
+		Sound		switch_sound;
 	public:
 		Player();
 	
@@ -41,13 +56,14 @@ class Player
 		void	ADD_PosY(float new_posY);
 		void	ADD_Stamina(float i);
 		void	ADD_Mana(float i);
-		void	ADD_Item(Weapon item);
+		void	ADD_Item(Item item);
 
 
-		Weapon		*GET_Hand(int hand);
+		Item		*GET_Hand(int hand);
 		int			GET_Hand_Type(int hand);
-		void		SWITCH_Weapon(int hand);
+		void		SWITCH_Item(int hand);
 		void		RELOAD_Weapons();
+		int			IS_Inventory_Open() { return inventory.OPENED(); }
 
 		bool		RUNNING() { return run; }
 		void		RUN() { run = 1; }

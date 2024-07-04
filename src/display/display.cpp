@@ -13,10 +13,10 @@ void	Display::UPDATE_Display()
 
 void	Display::SET_Camera()
 {
-	camera.target = (Vector2){player[0].GET_PosX(), player[0].GET_PosY()};
-	camera.offset = (Vector2){100.0f, 200.0f};
+	camera.target = (Vector2){0, 0};
+	camera.offset = (Vector2){0, 0};
 	camera.rotation = 0.0f;
-	camera.zoom = 1.0f;
+	camera.zoom = 1.4f;
 }
 
 int	Display::COUNT_Player(Player *player)
@@ -43,28 +43,11 @@ void	Display::UPDATE_Image()
 		DISPLAY_Game(1);
 }
 
-void	Display::DRAW_Player(int id)
+//Draw left and right hand icons, and there ressources
+void	Display::DRAW_Player_Item(int id)
 {
-	int	lifebar;
-	int	staminabar;
 	int ressource_bar;
-	int	textWidth;
-	
-	DrawTexturePro(texture->player_1, Rectangle{0, 0, TILE_SIZE, TILE_SIZE},
-                       { player[id].GET_PosX() * TILE_SIZE, player[id].GET_PosY() * TILE_SIZE,
-						TILE_SIZE, TILE_SIZE },
-                       { TILE_SIZE/2, TILE_SIZE/2 }, player[id].GET_Rot(), RAYWHITE);
 
-	textWidth = MeasureText(player[id].GET_Name().c_str(), TILE_SIZE / 2);
-	DrawText(player[id].GET_Name().c_str(), player[id].GET_PosX() * TILE_SIZE - textWidth / 2, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE * 1.5, TILE_SIZE / 2, WHITE);
-	
-	lifebar = player[id].GET_Hp() * TILE_SIZE / 110;
-	staminabar = (player[id].GET_Stamina_V() * TILE_SIZE / 110);
-	DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE, TILE_SIZE, TILE_SIZE / 2, DARKGRAY);
-	DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE *0.95, lifebar, TILE_SIZE / 7, RED);
-	DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE *0.75, staminabar, TILE_SIZE / 10, GREEN);
-	
-	//Draw left and right hand icons, and there ressources
 	if (!player[id].GET_Hand(LEFT)->EMPTY())//Left
 	{
 		DrawTexture(texture->item[player[id].GET_Hand(LEFT)->GET_Type()], player[id].GET_PosX() * TILE_SIZE - TILE_SIZE,
@@ -96,7 +79,41 @@ void	Display::DRAW_Player(int id)
 	else
 		DrawTexture(texture->r_hand, player[id].GET_PosX() * TILE_SIZE + TILE_SIZE / 2,
 			player[id].GET_PosY() * TILE_SIZE - TILE_SIZE, WHITE);
+}
 
+void	Display::DRAW_Player(int id)
+{
+	int	textWidth;
+	int	lifebar;
+	int	staminabar;
+	
+	DrawTexturePro(texture->player_1, Rectangle{0, 0, TILE_SIZE, TILE_SIZE},
+                       { player[id].GET_PosX() * TILE_SIZE, player[id].GET_PosY() * TILE_SIZE, TILE_SIZE, TILE_SIZE},
+                       { TILE_SIZE/2, TILE_SIZE/2 },
+					   player[id].GET_Rot(), RAYWHITE);
+
+	textWidth = MeasureText(player[id].GET_Name().c_str(), TILE_SIZE / 2);
+	DrawText(player[id].GET_Name().c_str(), player[id].GET_PosX() * TILE_SIZE - textWidth / 2, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE * 1.5, TILE_SIZE / 2, WHITE);
+	
+	lifebar = player[id].GET_Hp() * TILE_SIZE / 110;
+	staminabar = (player[id].GET_Stamina_V() * TILE_SIZE / 110);
+	DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE, TILE_SIZE, TILE_SIZE / 2, DARKGRAY);
+	DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE *0.95, lifebar, TILE_SIZE / 7, RED);
+	DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE *0.75, staminabar, TILE_SIZE / 10, GREEN);
+	
+	DRAW_Player_Item(id);
+}
+
+void	Display::DRAW_Events()
+{
+	int	n_happening = event->HAPPENING_N();
+	Vector2	pos;
+	for (int i = 0; i < n_happening ; i++)
+	{
+		pos = event->HAPPENING(i).GET_Pos();
+		if (IN_Map(map, pos.x, pos.y))
+			DrawTexture(event->HAPPENING(i).GET_Texture(), pos.x, pos.y, WHITE);
+	}
 }
 
 void	Display::DISPLAY_Game(int id)
@@ -106,10 +123,10 @@ void	Display::DISPLAY_Game(int id)
 	ClearBackground(DARKGRAY);
 	BeginMode2D(camera);
 
-	DRAW_Background();
+	DRAW_Background(id);
 	DRAW_Player(id);
+	//DRAW_Events();
 	//DrawFPS(player[id].GET_PosX() * TILE_SIZE + WIDTH / 2, player[id].GET_PosY() * TILE_SIZE - HEIGHT / 2);
-
 	EndMode2D();
 	EndDrawing();
 }

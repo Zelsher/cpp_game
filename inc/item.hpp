@@ -4,12 +4,11 @@
 #include <iostream>
 #include <string>
 
-#include "player.hpp"
-
 typedef struct s_audio
 {
 	Sound	reload;
 	Sound	end_reload;
+	Sound	use;
 }			t_audio;
 
 class Ressource
@@ -30,8 +29,9 @@ class Ressource
 };
 
 class Player;
+class Game;
 
-class Weapon
+class Item
 {
 	private:
 		bool		empty;
@@ -49,12 +49,12 @@ class Weapon
 
 		t_audio		audio;
 	public:
-		Weapon();
-		~Weapon();
-		void	SET_Weapon(int w_type, Ressource *Ressource);
+		Item();
+		~Item();
+		void		SET_Item(int w_type, Ressource *Ressource);
 		
-		int		GET_Type() { return(type); }
-		Color	GET_Color() { return(ressource->GET_Color()); }
+		int			GET_Type() { return(type); }
+		Color		GET_Color() { return(ressource->GET_Color()); }
 		
 		Ressource	*GET_Ressource() { return(ressource); }
 
@@ -63,7 +63,7 @@ class Weapon
 		int			RELOADING();
 		void		COOLDOWN();
 		int			IS_Cooldown();
-		void		USE(Vector2 player_pos, Vector2 use_pos, Player *t_player, vector<vector<char>> *map);
+		void		USE(Vector2 player_pos, Vector2 use_pos, Player *t_player, vector<vector<char>> *map, Game *game);
 	
 		bool		EMPTY() { return(empty); }
 };

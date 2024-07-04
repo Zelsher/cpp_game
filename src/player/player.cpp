@@ -11,6 +11,7 @@ int	Player::ACTIVATE_Player(string new_name, int new_id)
 	id = new_id;
 	name = new_name;
 	enable = 1;
+	switch_sound = LoadSound("asset/texture/Swap.mp3");
 	//fill pos
 	return (0);
 }
@@ -31,10 +32,11 @@ void	Player::UPDATE_Items()
 		stamina.ADD_Value(-1);
 }
 
-void	Player::SWITCH_Weapon(int hand)
+void	Player::SWITCH_Item(int hand)
 {
-	Weapon temp;
+	Item temp;
 
+	PlaySound(switch_sound);
 	temp = hands[hand];
 	hands[hand] = pocket[hand];
 	pocket[hand] = temp;
@@ -46,14 +48,14 @@ void	Player::RELOAD_Weapons()
 	hands[1].RELOAD();
 }
 
-void	Player::ADD_Item(Weapon item)
+void	Player::ADD_Item(Item n_item)
 {
 	if (hands[LEFT].EMPTY())
-		hands[LEFT] = item;
+		hands[LEFT] = n_item;
 	else if (hands[RIGHT].EMPTY())
-		hands[RIGHT] = item;
+		hands[RIGHT] = n_item;
 	else if (pocket[LEFT].EMPTY())
-		pocket[LEFT] = item;
+		pocket[LEFT] = n_item;
 	else if (pocket[RIGHT].EMPTY())
-		pocket[RIGHT] = item;
+		pocket[RIGHT] = n_item;
 }

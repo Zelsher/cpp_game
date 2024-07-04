@@ -1,7 +1,7 @@
 #include "../../inc/game.hpp"
 
 //si un item a commencer un reload ou un cd, il lincremente, si il la finit, il le remet a 0
-void	Weapon::UPDATE_Item()
+void	Item::UPDATE_Item()
 {
 	if (empty || !type)
 		return;
@@ -21,9 +21,9 @@ void	Weapon::UPDATE_Item()
 		cooldown++;
 }
 
-void	Weapon::RELOAD()
+void	Item::RELOAD()
 {
-	if (ressource_type == MANA)
+	if (ressource_type == MANA || ressource->GET_Value() == 100)
 		return;
 	if (reload_time && !RELOADING())
 	{
@@ -32,55 +32,67 @@ void	Weapon::RELOAD()
 	}
 }
 
-int	Weapon::RELOADING()
+int	Item::RELOADING()
 {
 	return(reload);
 }
 
-void	Weapon::COOLDOWN()
+void	Item::COOLDOWN()
 {
 	//cout << cooldown_time << endl;
 	if (cooldown_time && !cooldown)
 		cooldown++;
 }
 
-int	Weapon::IS_Cooldown()
+int	Item::IS_Cooldown()
 {
 	return(cooldown);
 }
 
 
-void	Weapon::USE(Vector2 player_pos, Vector2 use_pos, Player *player, vector<vector<char>> *map)
+void	Item::USE(Vector2 player_pos, Vector2 use_pos, Player *player, vector<vector<char>> *map, Game *game)
 {
-
+	(void)game;
+	use_pos.x /= TILE_SIZE;
+	use_pos.y /= TILE_SIZE;
 	if (empty || !type || reload || cooldown)
 		return;
 	//cout << cooldown << endl;
 	if (type == TP_RING)
 	{
-		int	cost = sqrt(pow(player_pos.x - use_pos.x, 2) + pow(player_pos.y - use_pos.y, 2)) / TILE_SIZE;
+		int	cost = (sqrt(pow(player_pos.x * TILE_SIZE - use_pos.x * TILE_SIZE, 2)
+			+ pow(player_pos.y * TILE_SIZE - use_pos.y * TILE_SIZE, 2)) / TILE_SIZE) * 5;
 		//cout << "cost" << cost << endl;
 
 		if (player->GET_Mana_V() > cost && 
-			moove_player_valid(map, use_pos.x / TILE_SIZE, use_pos.y / TILE_SIZE))
+			IN_Map(map, use_pos.x, use_pos.y))
 		{
-			use_pos.x /= TILE_SIZE;
-			use_pos.y /= TILE_SIZE;
 			player->ADD_Mana(-cost);
+			PlaySound(audio.use);
 			player->SET_Pos(use_pos);
+			COOLDOWN();
 		}
 	}
-	else if (type == MAGIC_STICK)
+	else if (type == MAGIC_STICK && ressource->GET_Value() >= 20)
 	{
-		GET_Ressource()->ADD_Value(-20);
+		ressource->ADD_Value(-20);
+		PlaySound(audio.use);
 		COOLDOWN();
 	}
 	else if ((type == PISTOL || type == UZI))
 	{
-		if (type == PISTOL)
-			GET_Ressource()->ADD_Value(-10);
-		if (type == UZI)
-			GET_Ressource()->ADD_Value(-2);
+		if (type == PISTOL && ressource->GET_Value() >= 10)
+		{
+			ressource->ADD_Value(-10);
+			PlaySound(audio.use);
+			//game->GET_Event()->ADD_Event(2, player_pos, use_pos, game);
+		}
+		if (type == UZI && ressource->GET_Value() >= 2)
+		{
+			ressource->ADD_Value(-2);
+			PlaySound(audio.use);
+			//game->GET_Event()->ADD_Event(2, player_pos, use_pos, game);
+		}
 		COOLDOWN();
 	}
 }

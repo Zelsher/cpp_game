@@ -4,6 +4,7 @@ void	Player::SET_Dir(float x, float y)
 {
 	dir.x = x;
 	dir.y = y;
+	rot = 1;
 	rot = atan2(y, x) * (180 / PI) + 90;// * (100.0f / PI);f
 }
 
@@ -32,7 +33,7 @@ void	Player::ADD_PosY(float new_posY)
 	posY += new_posY;
 }
 
-Weapon	*Player::GET_Hand(int hand)
+Item	*Player::GET_Hand(int hand)
 {
 	return (&hands[hand]);
 }

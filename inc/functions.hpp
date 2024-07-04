@@ -7,5 +7,5 @@
 
 vector<vector<char>>	OPEN_Map(string file);
 void 					PRINT_Map(const vector<vector<char>>& carte);
-int						moove_player_valid(vector<vector<char>> *map, float X, float Y);
+int						IN_Map(vector<vector<char>> *map, float X, float Y);
 #endif
