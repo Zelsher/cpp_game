@@ -13,7 +13,7 @@ int	main()
 	ring.SET_Weapon(TP_RING, game.GET_Player(0)->GET_Mana_p());
 	game.ADD_Player("Suceur de naine");
 	game.GET_Player(0)->ADD_Item(ring);
-	game.GET_Player(0)->ADD_Item(pistol);
+	game.GET_Player(0)->ADD_Item(uzi);
 	while (!WindowShouldClose())
 	{
 		game.UPDATE_Game();

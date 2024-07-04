@@ -57,11 +57,8 @@ void		Player::SWITCH_Weapon(int hand)
 
 void		Player::RELOAD_Weapons()
 {
-	
-	if (GET_Hand(RIGHT)->GET_Type() == PISTOL && GET_Hand(RIGHT)->GET_Ressource()->GET_Value() < 100)
-		GET_Hand(RIGHT)->RELOAD();
-	if (GET_Hand(LEFT)->GET_Type() == PISTOL && GET_Hand(LEFT)->GET_Ressource()->GET_Value() < 100)
-		GET_Hand(LEFT)->RELOAD();
+	hands[0].RELOAD();
+	hands[1].RELOAD();
 }
 
 void	Player::ADD_Item(Weapon item)

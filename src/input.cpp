@@ -26,12 +26,12 @@ int	MOOVING()
 void	Game::HANDLE_Input(int id)
 {
 	float m_speed = player[id].GET_Speed();
-	if (IsKeyDown(KEY_LEFT_SHIFT) && player[id].GET_Stamina_V() > 0 && MOOVING())
+	if (IsKeyDown(KEY_LEFT_SHIFT) && (player[id].GET_Stamina_V() > 20 || player[id].RUNNING()))
 	{
 		m_speed *= 1.5f;
 		player[id].RUN();
 	}
-	else
+	if (player[id].GET_Stamina_V() <= 0)
 		player[id].STOP_Run();
 
 	if (IsKeyReleased(KEY_SPACE))

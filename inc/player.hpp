@@ -49,6 +49,7 @@ class Player
 		void		SWITCH_Weapon(int hand);
 		void		RELOAD_Weapons();
 
+		bool		RUNNING() { return run; }
 		void		RUN() { run = 1; }
 		void		STOP_Run() { run = 0; }
 
