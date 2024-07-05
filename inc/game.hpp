@@ -3,15 +3,10 @@
 
 using namespace std;
 
-#define WIDTH 3440
-#define HEIGHT 1440
+#define WIDTH 2200
+#define HEIGHT 1200
 
 #define	TILE_SIZE 64
-
-//Audio
-#define TP 0
-#define MAGIC 1
-#define SHOOT 2
 
 #define	RIGHT 1
 #define	LEFT 0
@@ -39,6 +34,7 @@ typedef struct s_texture
 {
 	Texture2D	ground_1;
 	Texture2D	wall_1;
+	Texture2D	house_1;
 	Texture2D	tree_1;
 	Texture2D	player_1;
 	Texture2D	player_2;
@@ -57,7 +53,7 @@ class Display
 		Player					*player;
 		t_texture				*texture;
 		Event					*event;
-		vector<vector<char>>	*map;
+		vector<vector<Cell>>	*map;
 
 		int						n_cam;
 		int						width;
@@ -81,7 +77,7 @@ class Display
 
 		Camera2D	*GET_Camera(int id) { (void)id; return (&camera); }
 		void		SET_Camera();
-		void		SET_Map(vector<vector<char>> *n_map, t_texture *map_texure, int width, int height);
+		void		SET_Map(vector<vector<Cell>> *n_map, t_texture *map_texure, int width, int height);
 		void		SET_Event(Event *n_event) { event = n_event; }
 };
 
@@ -92,7 +88,7 @@ class Game
 		Display					display;
 		Event					event;
 		t_texture				texture;
-		vector<vector<char>>	map;
+		vector<vector<Cell>>	map;
 
 	public:
 		Game();

@@ -6,7 +6,7 @@ Game::Game() : display(player)
 {
 	InitWindow(WIDTH, HEIGHT, "game");
 	ClearBackground(BLACK);
-	SetTargetFPS(60);
+	SetTargetFPS(200);
 	InitAudioDevice();
 	CHOSE_Lvl();
 	display.SET_Event(&event);
@@ -24,7 +24,7 @@ void	Game::CHOSE_Lvl()
 
 	int	lvl = 1;//Offrir un choix
 		if (lvl == 1)
-	map = OPEN_Map("asset/map/map1");
+	map = OPEN_Map("asset/map/map2");
 	width = map[1].size();
 	height = map.size();
 	LOAD_Texture();
@@ -36,6 +36,7 @@ void		Game::LOAD_Texture()
 {
 	texture.wall_1 =  LoadTexture("asset/texture/Wall_1.png");
 	texture.ground_1 = LoadTexture("asset/texture/Ground_1.png");
+	texture.house_1 =  LoadTexture("asset/texture/House.png");
 	texture.tree_1 = LoadTexture("asset/texture/Tree_1.png");
 	texture.player_1 = LoadTexture("asset/texture/character_1/Player_1.png");
 	texture.player_2 = LoadTexture("asset/texture/Player_2.png");
@@ -57,8 +58,8 @@ int Game::ADD_Player(string name)
 		i++;
 	if (i == 2)
 		return(1);
-	player[0].SET_PosX(15);
-	player[0].SET_PosY(15);
+	player[0].SET_PosX(2);
+	player[0].SET_PosY(2);
 	return (player[i].ACTIVATE_Player(name, i));
 	display.UPDATE_Display();
 }

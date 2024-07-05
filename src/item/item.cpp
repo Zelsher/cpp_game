@@ -21,15 +21,15 @@ void	Item::SET_Item(int w_type, Ressource *n_ressource)
 	type = w_type;
 	if (w_type == PISTOL)
 	{
-		reload_time = 100;
-		cooldown_time = 20;
+		reload_time = 40;
+		cooldown_time = 12;
 		ressource = new Ressource(ORANGE);
 		ressource_type = AMMO;
 		audio.use = LoadSound("asset/audio/Shoot.mp3");
 	}
 	else if (w_type == UZI)
 	{
-		reload_time = 120;
+		reload_time = 60;
 		cooldown_time = 2;
 		ressource = new Ressource(ORANGE);
 		ressource_type = AMMO;

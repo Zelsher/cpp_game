@@ -1,10 +1,8 @@
 #include "../../inc/game.hpp"
 
-using namespace std;
-
-vector<vector<char>> OPEN_Map(string file)
+vector<vector<Cell>> OPEN_Map(string file)
 {
-    vector<vector<char>> map;
+    vector<vector<Cell>> map;
 	string ligne;
 	ifstream fichier(file);
     if (!fichier.is_open()) 
@@ -14,8 +12,8 @@ vector<vector<char>> OPEN_Map(string file)
     }
     while (getline(fichier, ligne)) 
 	{
-        vector<char> ligneCarte;
-        for (char c : ligne) 
+        vector<Cell> ligneCarte;
+        for (Cell c : ligne) 
 		{
             ligneCarte.push_back(c);
         }
@@ -25,14 +23,31 @@ vector<vector<char>> OPEN_Map(string file)
     return (map);
 }
 
-void PRINT_Map(const vector<vector<char>>& map)
+void PRINT_Map(const vector<vector<Cell>>& map)
 {
     for (const auto& ligne : map)
 	{
-        for (char cell : ligne) 
+        for (Cell cell : ligne) 
 		{
-            cout << cell;
+            cout << cell.GET_Type();
         }
         cout << endl;
     }
+}
+
+int	IN_Map(vector<vector<Cell>> *map, float X, float Y)
+{
+	if (X < 0 || Y < 0)
+		return (0);
+	if ((*map).size() < Y || (*map)[(int)Y].size() < X)
+		return (0);
+	//cout << (*map)[(int)Y][(int)X] << endl;
+	return (1);
+}
+
+int NOT_Wall(vector<vector<Cell>> *map, float X, float Y)
+{
+    if (!IN_Map(map, X, Y) || (*map)[(int)Y][(int)X].GET_Type() != GROUND)
+        return (0);
+    return (1);
 }

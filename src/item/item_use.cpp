@@ -50,7 +50,7 @@ int	Item::IS_Cooldown()
 }
 
 
-void	Item::USE(Vector2 player_pos, Vector2 use_pos, Player *player, vector<vector<char>> *map, Game *game)
+void	Item::USE(Vector2 player_pos, Vector2 use_pos, Player *player, vector<vector<Cell>> *map, Game *game)
 {
 	(void)game;
 	use_pos.x /= TILE_SIZE;
@@ -60,10 +60,10 @@ void	Item::USE(Vector2 player_pos, Vector2 use_pos, Player *player, vector<vecto
 	//cout << cooldown << endl;
 	if (type == TP_RING)
 	{
-		int	cost = (sqrt(pow(player_pos.x * TILE_SIZE - use_pos.x * TILE_SIZE, 2)
-			+ pow(player_pos.y * TILE_SIZE - use_pos.y * TILE_SIZE, 2)) / TILE_SIZE) * 5;
+		int	cost = ((sqrt(pow(player_pos.x * TILE_SIZE - use_pos.x * TILE_SIZE, 2)
+			+ pow(player_pos.y * TILE_SIZE - use_pos.y * TILE_SIZE, 2)) / TILE_SIZE)) * 5;
 		//cout << "cost" << cost << endl;
-		if (!IN_Map(map, use_pos.x, use_pos.y))
+		if (!NOT_Wall(map, use_pos.x, use_pos.y))
 			return;
 		if (player->GET_Mana_V() > cost)
 		{
@@ -75,6 +75,7 @@ void	Item::USE(Vector2 player_pos, Vector2 use_pos, Player *player, vector<vecto
 	}
 	else if (type == MAGIC_STICK && ressource->GET_Value() >= 20)
 	{
+		game->GET_Event()->ADD_Event(MAGIC_SPELL, player_pos, use_pos, game);
 		ressource->ADD_Value(-20);
 		PlaySound(audio.use);
 		COOLDOWN();
@@ -85,13 +86,13 @@ void	Item::USE(Vector2 player_pos, Vector2 use_pos, Player *player, vector<vecto
 		{
 			ressource->ADD_Value(-10);
 			PlaySound(audio.use);
-			game->GET_Event()->ADD_Event(2, player_pos, use_pos, game);
+			game->GET_Event()->ADD_Event(SHOOT, player_pos, use_pos, game);
 		}
 		if (type == UZI && ressource->GET_Value() >= 2)
 		{
-			ressource->ADD_Value(-2);
+			ressource->ADD_Value(-4);
 			PlaySound(audio.use);
-			game->GET_Event()->ADD_Event(2, player_pos, use_pos, game);
+			game->GET_Event()->ADD_Event(SHOOT, player_pos, use_pos, game);
 		}
 		COOLDOWN();
 	}

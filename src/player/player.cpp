@@ -24,7 +24,7 @@ void	Player::UPDATE_Items()
 	pocket[0].UPDATE_Item();
 	pocket[1].UPDATE_Item();
 	if (mana.GET_Value() < 100)
-		mana.ADD_Value(0.4f);
+		mana.ADD_Value(0.2f);
 
 	if (stamina.GET_Value() < 100 && !run)
 		stamina.ADD_Value(1);

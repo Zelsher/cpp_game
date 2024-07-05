@@ -12,7 +12,20 @@ Happening::Happening()
 
 Happening::Happening(int n_type, Vector2 origin_pos, Vector2 use_pos, Game *game)
 {
+
 	type = n_type;
+	incrX = 0;
+	incrY = 0;
+	if (type == MAGIC_SPELL)
+	{
+		pos.x = use_pos.x;
+		pos.y = use_pos.y;
+		texture = &game->GET_Texture()->tile1;
+		duration = 50;
+		happen = 0;
+		return;
+	}
+
 	pos.x = origin_pos.x;
 	pos.y = origin_pos.y;
 
@@ -34,7 +47,6 @@ Happening::Happening(int n_type, Vector2 origin_pos, Vector2 use_pos, Game *game
     xstep = v * cos(theta);
     ystep = v * sin(theta);
 
-    std::cout << "Position initiale: (" << x << ", " << y << ")\n";
 	cout << ystep << " " << xstep << endl;
 
 	if (type == SHOOT)
@@ -55,11 +67,11 @@ Happening::~Happening()
 {
 }
 
-int	Happening::UPDATE_Happening(vector<vector<char>> *map)
+int	Happening::UPDATE_Happening(vector<vector<Cell>> *map)
 {
 	//cout << "update" << endl;
 	if ((duration && duration < happen)
-		|| !IN_Map(map, pos.x, pos.y))
+		|| !NOT_Wall(map, pos.x + incrX, pos.y + incrY))
 		return(0);
 	if (type == SHOOT)
 	{

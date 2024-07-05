@@ -1,8 +1,7 @@
-Ajuster le coût en mana en fonction de la distance
 Inventaire
 Pause
 Drag and drop dans l’inventaire
-Système ditem
-Revoir le système de course
-class carte?
-Tire des armes ?
+optimisation
+calcul tp
+creer une bonne map
+

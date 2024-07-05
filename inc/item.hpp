@@ -68,13 +68,14 @@ class Item
 		Color		GET_Color() { return(ressource->GET_Color()); }
 		
 		Ressource	*GET_Ressource() { return(ressource); }
-
+		int			GET_Ressource_Type() { return(ressource_type); }
+	
 		void		UPDATE_Item();
 		void		RELOAD();
 		int			RELOADING();
 		void		COOLDOWN();
 		int			IS_Cooldown();
-		void		USE(Vector2 player_pos, Vector2 use_pos, Player *t_player, vector<vector<char>> *map, Game *game);
+		void		USE(Vector2 player_pos, Vector2 use_pos, Player *t_player, vector<vector<Cell>> *map, Game *game);
 	
 		bool		EMPTY() { return(empty); }
 };

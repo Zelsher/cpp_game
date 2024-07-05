@@ -27,7 +27,7 @@ int	Display::COUNT_Player(Player *player)
 	return (i);
 }
 
-void	Display::SET_Map(vector<vector<char>> *n_map, t_texture *map_texture, int width, int height)
+void	Display::SET_Map(vector<vector<Cell>> *n_map, t_texture *map_texture, int width, int height)
 {
 	texture = map_texture;
 	map = n_map;
@@ -53,10 +53,10 @@ void	Display::DRAW_Player_Item(int id)
 		DrawTexture(texture->item[player[id].GET_Hand(LEFT)->GET_Type()], player[id].GET_PosX() * TILE_SIZE - TILE_SIZE,
 			player[id].GET_PosY() * TILE_SIZE - TILE_SIZE, WHITE);
 	
-		if (player[id].GET_Hand(LEFT)->GET_Ressource())
+		if (player[id].GET_Hand(LEFT)->GET_Ressource_Type() != MANA)
 		{
-			ressource_bar = (player[id].GET_Hand(LEFT)->GET_Ressource()->GET_Value() * TILE_SIZE / 110) / 2;
-			DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05,
+			ressource_bar = (player[id].GET_Hand(LEFT)->GET_Ressource()->GET_Value() * TILE_SIZE / 115) / 2;
+			DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE + TILE_SIZE * 0.05,
 				player[id].GET_PosY() * TILE_SIZE - TILE_SIZE *0.60, ressource_bar, TILE_SIZE / 10, player[id].GET_Hand(LEFT)->GET_Color());
 		}
 	}
@@ -69,10 +69,10 @@ void	Display::DRAW_Player_Item(int id)
 		DrawTexture(texture->item[player[id].GET_Hand(RIGHT)->GET_Type()], player[id].GET_PosX() * TILE_SIZE + TILE_SIZE / 2,
 			player[id].GET_PosY() * TILE_SIZE - TILE_SIZE, WHITE);
 		
-		if (player[id].GET_Hand(RIGHT)->GET_Ressource())
+		if (player[id].GET_Hand(RIGHT)->GET_Ressource_Type() != MANA)
 		{
-			ressource_bar = (player[id].GET_Hand(RIGHT)->GET_Ressource()->GET_Value() * TILE_SIZE / 110) / 2;
-			DrawRectangle(player[id].GET_PosX() * TILE_SIZE,
+			ressource_bar = (player[id].GET_Hand(RIGHT)->GET_Ressource()->GET_Value() * TILE_SIZE / 115) / 2;
+			DrawRectangle(player[id].GET_PosX() * TILE_SIZE + TILE_SIZE / 2,
 				player[id].GET_PosY() * TILE_SIZE - TILE_SIZE *0.60, ressource_bar, TILE_SIZE / 10, player[id].GET_Hand(RIGHT)->GET_Color());
 		}
 	}
@@ -86,6 +86,8 @@ void	Display::DRAW_Player(int id)
 	int	textWidth;
 	int	lifebar;
 	int	staminabar;
+	int	manabar;
+
 	
 	DrawTexturePro(texture->player_1, Rectangle{0, 0, TILE_SIZE, TILE_SIZE},
                        { player[id].GET_PosX() * TILE_SIZE, player[id].GET_PosY() * TILE_SIZE, TILE_SIZE, TILE_SIZE},
@@ -95,11 +97,14 @@ void	Display::DRAW_Player(int id)
 	textWidth = MeasureText(player[id].GET_Name().c_str(), TILE_SIZE / 2);
 	DrawText(player[id].GET_Name().c_str(), player[id].GET_PosX() * TILE_SIZE - textWidth / 2, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE * 1.5, TILE_SIZE / 2, WHITE);
 	
+	//HUD Relativ
 	lifebar = player[id].GET_Hp() * TILE_SIZE / 110;
 	staminabar = (player[id].GET_Stamina_V() * TILE_SIZE / 110);
+	manabar = (player[id].GET_Mana_V() * TILE_SIZE / 110);
 	DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE, TILE_SIZE, TILE_SIZE / 2, DARKGRAY);
 	DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE *0.95, lifebar, TILE_SIZE / 7, RED);
 	DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE *0.75, staminabar, TILE_SIZE / 10, GREEN);
+	DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE *0.60, manabar, TILE_SIZE / 10, DARKBLUE);
 	
 	DRAW_Player_Item(id);
 }
@@ -112,7 +117,7 @@ void	Display::DRAW_Events()
 	{
 		pos = event->HAPPENING(i).GET_Pos();
 		if (IN_Map(map, pos.x, pos.y))
-			DrawTexture(event->HAPPENING(i).GET_Texture(), event->HAPPENING(i).GET_Pos().x * TILE_SIZE, event->HAPPENING(i).GET_Pos().y * TILE_SIZE, WHITE);
+			DrawTexture(event->HAPPENING(i).GET_Texture(), event->HAPPENING(i).GET_Pos().x * TILE_SIZE - TILE_SIZE / 4, event->HAPPENING(i).GET_Pos().y * TILE_SIZE - TILE_SIZE / 4, WHITE);
 	}
 }
 
@@ -126,7 +131,7 @@ void	Display::DISPLAY_Game(int id)
 	DRAW_Background(id);
 	DRAW_Player(id);
 	DRAW_Events();
-	//DrawFPS(player[id].GET_PosX() * TILE_SIZE + WIDTH / 2, player[id].GET_PosY() * TILE_SIZE - HEIGHT / 2);
+	DrawFPS(0, 0);
 	EndMode2D();
 	EndDrawing();
 }

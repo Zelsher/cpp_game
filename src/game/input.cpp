@@ -1,18 +1,5 @@
 #include "../../inc/game.hpp"
 
-
-int	IN_Map(vector<vector<char>> *map, float X, float Y)
-{
-	if (X < 0 || Y < 0)
-		return (0);
-	if ((*map).size() < Y || (*map)[(int)Y].size() < X)
-		return (0);
-	if ((*map)[(int)Y][(int)X] == '1')
-		return (0);
-	//cout << (*map)[(int)Y][(int)X] << endl;
-	return (1);
-}
-
 int	MOOVING()
 {
 	if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_RIGHT)
@@ -39,13 +26,13 @@ void	Game::HANDLE_Input(int id)
 //Handle Moove
 	if (IsKeyReleased(KEY_SPACE))
 		(void)player;//pause
-	if ((IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) && IN_Map(&map, player[id].GET_PosX() - m_speed * 2, player[id].GET_PosY()))
+	if ((IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) && NOT_Wall(&map, player[id].GET_PosX() - m_speed * 2, player[id].GET_PosY()))
 		player[id].ADD_PosX(-m_speed);
-	if ((IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) && IN_Map(&map, player[id].GET_PosX() + m_speed * 2, player[id].GET_PosY()))
+	if ((IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) && NOT_Wall(&map, player[id].GET_PosX() + m_speed * 2, player[id].GET_PosY()))
 		player[id].ADD_PosX(m_speed);
-	if ((IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) && IN_Map(&map, player[id].GET_PosX(), player[id].GET_PosY() - m_speed * 2))
+	if ((IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) && NOT_Wall(&map, player[id].GET_PosX(), player[id].GET_PosY() - m_speed * 2))
 		player[id].ADD_PosY(-m_speed);
-	if ((IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) && IN_Map(&map, player[id].GET_PosX(), player[id].GET_PosY() + m_speed * 2))
+	if ((IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) && NOT_Wall(&map, player[id].GET_PosX(), player[id].GET_PosY() + m_speed * 2))
 		player[id].ADD_PosY(m_speed);
 
 //Handle Mouse Click
