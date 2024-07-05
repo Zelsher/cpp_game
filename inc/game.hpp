@@ -8,17 +8,6 @@ using namespace std;
 
 #define	TILE_SIZE 64
 
-//Item Type
-#define	TP_RING 1
-#define	MAGIC_STICK 2
-#define PISTOL 3
-#define UZI 4
-#define N_ITEM
-
-//Resspource Type
-#define MANA 1
-#define AMMO 2
-
 //Audio
 #define TP 0
 #define MAGIC 1
@@ -38,7 +27,6 @@ using namespace std;
 #include <vector>
 #include <iostream>
 #include <string>
-#include "raylib.h"
 #include "player.hpp"
 #include "item.hpp"
 #include "event.hpp"

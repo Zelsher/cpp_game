@@ -63,9 +63,9 @@ void	Item::USE(Vector2 player_pos, Vector2 use_pos, Player *player, vector<vecto
 		int	cost = (sqrt(pow(player_pos.x * TILE_SIZE - use_pos.x * TILE_SIZE, 2)
 			+ pow(player_pos.y * TILE_SIZE - use_pos.y * TILE_SIZE, 2)) / TILE_SIZE) * 5;
 		//cout << "cost" << cost << endl;
-
-		if (player->GET_Mana_V() > cost && 
-			IN_Map(map, use_pos.x, use_pos.y))
+		if (!IN_Map(map, use_pos.x, use_pos.y))
+			return;
+		if (player->GET_Mana_V() > cost)
 		{
 			player->ADD_Mana(-cost);
 			PlaySound(audio.use);
@@ -85,13 +85,13 @@ void	Item::USE(Vector2 player_pos, Vector2 use_pos, Player *player, vector<vecto
 		{
 			ressource->ADD_Value(-10);
 			PlaySound(audio.use);
-			//game->GET_Event()->ADD_Event(2, player_pos, use_pos, game);
+			game->GET_Event()->ADD_Event(2, player_pos, use_pos, game);
 		}
 		if (type == UZI && ressource->GET_Value() >= 2)
 		{
 			ressource->ADD_Value(-2);
 			PlaySound(audio.use);
-			//game->GET_Event()->ADD_Event(2, player_pos, use_pos, game);
+			game->GET_Event()->ADD_Event(2, player_pos, use_pos, game);
 		}
 		COOLDOWN();
 	}

@@ -13,7 +13,7 @@ EVENT_DIR	= src/event/
 OBJ_DIR		= obj/
 RAYLIB_LIB	= -lraylib
 CC			= c++
-CFLAGS		= -Wall -Wextra -Werror -std=c++11 -I$(INC)
+CFLAGS		= -g -Wall -Wextra -Werror -std=c++11 -I$(INC)
 
 RM			= rm -f
 

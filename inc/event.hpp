@@ -20,7 +20,7 @@ class Happening
 		Happening(int type, Vector2 origin_pos, Vector2 use_pos, Game *game);
 		~Happening();
 
-		void	UPDATE_Happening();
+		int	UPDATE_Happening(vector<vector<char>> *map);
 
 		Vector2	GET_Pos() { return pos; }
 		Texture	GET_Texture() { return *texture; }
@@ -37,7 +37,7 @@ class Event
 
 		Event	*EVENT() { return this; }
 		void	ADD_Event(int type, Vector2 origin_pos, Vector2 use_pos, Game *game);
-		void	UPDATE_EVENTS();
+		void	UPDATE_EVENTS(vector<vector<char>> *map);
 
 		Happening	HAPPENING(int id) { return happening[id]; }
 		int			HAPPENING_N() const { return last_happening; }

@@ -112,7 +112,7 @@ void	Display::DRAW_Events()
 	{
 		pos = event->HAPPENING(i).GET_Pos();
 		if (IN_Map(map, pos.x, pos.y))
-			DrawTexture(event->HAPPENING(i).GET_Texture(), pos.x, pos.y, WHITE);
+			DrawTexture(event->HAPPENING(i).GET_Texture(), event->HAPPENING(i).GET_Pos().x * TILE_SIZE, event->HAPPENING(i).GET_Pos().y * TILE_SIZE, WHITE);
 	}
 }
 
@@ -125,7 +125,7 @@ void	Display::DISPLAY_Game(int id)
 
 	DRAW_Background(id);
 	DRAW_Player(id);
-	//DRAW_Events();
+	DRAW_Events();
 	//DrawFPS(player[id].GET_PosX() * TILE_SIZE + WIDTH / 2, player[id].GET_PosY() * TILE_SIZE - HEIGHT / 2);
 	EndMode2D();
 	EndDrawing();

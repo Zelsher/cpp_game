@@ -1,6 +1,17 @@
 #ifndef ITEM_HPP
 # define ITEM_HPP
 
+//Item Type
+#define	TP_RING 1
+#define	MAGIC_STICK 2
+#define PISTOL 3
+#define UZI 4
+#define N_ITEM
+
+//Resspource Type
+#define MANA 1
+#define AMMO 2
+
 #include <iostream>
 #include <string>
 

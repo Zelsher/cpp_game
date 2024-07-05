@@ -69,9 +69,9 @@ void	Game::UPDATE_Game()
 
 	player[0].UPDATE_Items();
 
-	display.UPDATE_Image();
+	event.UPDATE_EVENTS(&map);
 
-	//event.UPDATE_EVENTS();
+	display.UPDATE_Image();
 
 	if (player[0].IS_Inventory_Open())
 		(void)player[0];

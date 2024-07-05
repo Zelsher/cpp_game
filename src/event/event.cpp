@@ -11,14 +11,21 @@ Event::~Event()
 void	Event::ADD_Event(int type, Vector2 origin_pos, Vector2 use_pos, Game *game)
 {
 	cout << "new_event" << endl;
-	happening.push_back(Happening(type, origin_pos, use_pos, game));
+	Happening *temp = new Happening(type, origin_pos, use_pos, game);
+	happening.push_back(*temp);
 	last_happening++;
 }
 
-void	Event::UPDATE_EVENTS()
+void	Event::UPDATE_EVENTS(vector<vector<char>> *map)
 {
 	for (int i = 0 ; i < last_happening ; i++)
 	{
-		happening[i].UPDATE_Happening();//verifier si il est detruit ici et decr n
+		if (!happening[i].UPDATE_Happening(map))
+		{
+			cout << "end_event\n";
+			happening.erase(happening.begin() + i);
+			i--;
+			last_happening--;
+		}
 	}
 }
