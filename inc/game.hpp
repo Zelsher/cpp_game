@@ -77,20 +77,27 @@ class Game
 	private:
 		Player					player[2];
 		Display					display;
-		Event					event;
 		t_texture				texture;
+	
+		Event					event;
 		vector<Mob>				mobs;
+		vector<Vector3>			spawner;//z=proba
 		vector<vector<Cell>>	map;
+
+		size_t					frame;
 
 	public:
 		Game();
 		~Game() noexcept;
 
-		void		CHOSE_Lvl();
-		void		LOAD_Texture();
+		void					CHOSE_Lvl();
+		void					LOAD_Spawner(Vector3 pos);
+		void					LOAD_Texture();
+		vector<vector<Cell>>	OPEN_Map(string file);
 
 		void		HANDLE_Input(int id);
 		void		HANDLE_Click(Vector2 position, int id, int hand);
+		void		UPDATE_Spawner();
 		void		UPDATE_Game();
 		
 		int 		ADD_Player(string name);
@@ -100,6 +107,7 @@ class Game
 		string		GET_Name_Player(int id) const { return player[id].GET_Name(); }
 
 		void		CREATE_Mob(int type, Vector2 pos);
+
 
 		Player		*GET_Player(int id) { return(&player[id]); }
 		Event		*GET_Event() { return &event; }

@@ -19,27 +19,10 @@ Vector2 FIND_Direction(Vector2 start_pos, Vector2 end_pos)
     return (pos);
 }
 
-vector<vector<Cell>> OPEN_Map(string file)
+void    Game::LOAD_Spawner(Vector3 pos)
 {
-    vector<vector<Cell>> map;
-	string ligne;
-	ifstream fichier(file);
-    if (!fichier.is_open()) 
-	{
-        cerr << "Erreur d'ouverture du fichier!" << endl;
-        exit(1);
-    }
-    while (getline(fichier, ligne)) 
-	{
-        vector<Cell> ligneCarte;
-        for (Cell c : ligne) 
-		{
-            ligneCarte.push_back(c);
-        }
-        map.push_back(ligneCarte);
-    }
-    fichier.close();
-    return (map);
+    cout << pos.x << " " << pos.y << " " << pos.z << endl;
+    spawner.push_back(pos);
 }
 
 void PRINT_Map(const vector<vector<Cell>>& map)

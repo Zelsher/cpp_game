@@ -1,7 +1,8 @@
 #include "game.hpp"
 
-#define GROUND '0'
-#define WALL '1'
+#define SPAWN1 1
+#define GROUND 'G'
+#define WALL 'W'
 #define HOUSE_BASE 'H'
 #define HOUSE 'h'
 #define TREE_BASE 'T'
@@ -10,6 +11,8 @@
 #define ROAD_1 "-"
 #define ROAD_2 "|"
 #define ROAD_3 "+"
+
+class Game;
 
 class Cell
 {

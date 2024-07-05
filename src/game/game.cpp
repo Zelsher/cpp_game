@@ -2,7 +2,7 @@
 
 //Game
 
-Game::Game() : display(player)
+Game::Game() : display(player), frame(0)
 {
 	InitWindow(WIDTH, HEIGHT, "game");
 	ClearBackground(BLACK);
@@ -23,7 +23,35 @@ void		Game::CREATE_Mob(int type, Vector2 pos)
 	Mob	ennemy(this, &texture.texture_pack, type, pos);
 	mobs.push_back(ennemy);
 }
-
+vector<vector<Cell>> Game::OPEN_Map(string file)
+{
+    vector<vector<Cell>> map;
+	string ligne;
+	ifstream fichier(file);
+    if (!fichier.is_open()) 
+	{
+        cerr << "Erreur d'ouverture du fichier!" << endl;
+        exit(1);
+    }
+    int y = 0;
+    int x = 0;
+    while (getline(fichier, ligne)) 
+	{
+        vector<Cell> ligneCarte;
+        for (Cell c : ligne) 
+		{
+            ligneCarte.push_back(c);
+            if (c.GET_Type() >= 48 && c.GET_Type() <= 57)
+                LOAD_Spawner(Vector3{(float)x, (float)y, (float)(c.GET_Type() - '0')});
+            x++;
+        }
+        map.push_back(ligneCarte);
+        y++;
+		x = 0;
+    }
+    fichier.close();
+    return (map);
+}
 void	Game::CHOSE_Lvl()
 {
 	int	width;
@@ -31,7 +59,7 @@ void	Game::CHOSE_Lvl()
 
 	int	lvl = 1;//Offrir un choix
 		if (lvl == 1)
-	map = OPEN_Map("asset/map/map1");
+	map = OPEN_Map("asset/map/map.txt");
 	width = map[1].size();
 	height = map.size();
 	LOAD_Texture();
@@ -73,6 +101,19 @@ int Game::ADD_Player(string name)
 	display.UPDATE_Display();
 }
 
+void	Game::UPDATE_Spawner()
+{
+	for (size_t i = 0; i < spawner.size(); i++)
+	{
+		//cout << spawner[i].z << endl;
+		if (spawner[i].z && rand()%9 + 1 < spawner[i].z)
+		{
+			//cout << spawner[i].x << " " << spawner[i].y << endl;
+			CREATE_Mob(ENNEMY, Vector2{spawner[i].x, spawner[i].y});
+		}
+	}
+}
+
 void	Game::UPDATE_Game()
 {
 	HANDLE_Input(0);
@@ -84,7 +125,13 @@ void	Game::UPDATE_Game()
 	for (size_t i = 0; i < mobs.size(); i++)
 		mobs[i].ACTION(&map);
 
+	if (frame % 50 == 0)
+		UPDATE_Spawner();
+
+	if (frame == 100000)
+		frame = 0;
 	display.UPDATE_Image();
+	frame++;
 
 	if (player[0].IS_Inventory_Open())
 		(void)player[0];

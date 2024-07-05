@@ -21,7 +21,7 @@ void	Display::GET_Display_Width(int id)
 
 void	Display::DRAW_Background()
 {
-
+	int	type;
 	for (int y = display_Max.y; y >= display_Min.y; y--)
 	{
 	  for (int x = display_Max.x; x >= display_Min.x; x--)
@@ -29,16 +29,18 @@ void	Display::DRAW_Background()
 			//cout << "y" << y_min << " " << y_max << endl;
 			//cout << "x" << x_min << " " << x_max << endl;
 			//cout << "[" << y << "] " << "[" << x << "]" << endl;
-			if ((*map)[y][x].GET_Type() == GROUND || HOUSE || HOUSE_BASE || TREE)
+			type = (*map)[y][x].GET_Type();
+			if (type == GROUND || type == HOUSE || type == HOUSE_BASE
+				|| type == TREE || type == TREE_BASE)
 				DrawTexture(texture->ground_1, x * TILE_SIZE, y * TILE_SIZE, WHITE);
-			if ((*map)[y][x].GET_Type() == WALL)
+			else if (type == WALL)
 				DrawTexture(texture->wall_1, x * TILE_SIZE, y * TILE_SIZE, WHITE);
-			else if ((*map)[y][x].GET_Type() == BRICK_GROUND)
+			else if (type == BRICK_GROUND)
 				DrawTexture(texture->wall_1, x * TILE_SIZE, y * TILE_SIZE, WHITE);
 			
-			if ((*map)[y][x].GET_Type() == TREE_BASE)
+			if (type == TREE_BASE)
 				DrawTexture(texture->tree_1, x * TILE_SIZE, y * TILE_SIZE, WHITE);
-			if ((*map)[y][x].GET_Type() == HOUSE_BASE)
+			if (type == HOUSE_BASE)
 				DrawTexture(texture->house_1, x * TILE_SIZE, y * TILE_SIZE, WHITE);
 		}
 	}
