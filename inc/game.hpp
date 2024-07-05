@@ -27,6 +27,7 @@ using namespace std;
 #include <vector>
 #include <iostream>
 #include <string>
+#include "map.hpp"
 #include "player.hpp"
 #include "item.hpp"
 #include "event.hpp"
