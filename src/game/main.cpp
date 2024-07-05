@@ -5,6 +5,7 @@ int	main()
 	Game	game;
 
 	game.ADD_Player("Suceur de naine");
+	game.CREATE_Mob(ENNEMY, Vector2{3, 8});
 
 	Item	ring;
 	ring.SET_Item(TP_RING, game.GET_Player(0)->GET_Mana_p());
@@ -24,7 +25,5 @@ int	main()
 	game.GET_Player(0)->ADD_Item(ring);
 
 	while (!WindowShouldClose())
-	{
 		game.UPDATE_Game();
-	}
 }

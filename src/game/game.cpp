@@ -10,11 +10,18 @@ Game::Game() : display(player)
 	InitAudioDevice();
 	CHOSE_Lvl();
 	display.SET_Event(&event);
+	display.SET_Mobs(&mobs);
 }
 
 Game::~Game()
 {
 	CloseWindow();
+}
+
+void		Game::CREATE_Mob(int type, Vector2 pos)
+{
+	Mob	ennemy(this, &texture.texture_pack, type, pos);
+	mobs.push_back(ennemy);
 }
 
 void	Game::CHOSE_Lvl()
@@ -24,7 +31,7 @@ void	Game::CHOSE_Lvl()
 
 	int	lvl = 1;//Offrir un choix
 		if (lvl == 1)
-	map = OPEN_Map("asset/map/map2");
+	map = OPEN_Map("asset/map/map1");
 	width = map[1].size();
 	height = map.size();
 	LOAD_Texture();
@@ -48,6 +55,8 @@ void		Game::LOAD_Texture()
 	texture.item[MAGIC_STICK] = LoadTexture("asset/texture/32.png");
 	texture.item[PISTOL] = LoadTexture("asset/texture/Pistol.png");
 	texture.item[UZI] = LoadTexture("asset/texture/Uzi.png");
+	texture.texture_pack.ennemy = LoadTexture("asset/texture/32.png");
+	//texture.texture_pack.ennemy = LoadTexture("assest/texture/ennemy_texture_pack/1.png");
 }
 
 int Game::ADD_Player(string name)
@@ -71,6 +80,9 @@ void	Game::UPDATE_Game()
 	player[0].UPDATE_Items();
 
 	event.UPDATE_EVENTS(&map);
+
+	for (size_t i = 0; i < mobs.size(); i++)
+		mobs[i].ACTION(&map);
 
 	display.UPDATE_Image();
 

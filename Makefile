@@ -9,6 +9,7 @@ PLAYER_DIR	= src/player/
 ITEM_DIR	= src/item/
 MAP_DIR		= src/map/
 EVENT_DIR	= src/event/
+MOB_DIR		= src/mob/
 
 OBJ_DIR		= obj/
 RAYLIB_LIB	= -lraylib
@@ -31,6 +32,8 @@ SRC			=	$(GAME_DIR)main.cpp \
 				$(MAP_DIR)map.cpp \
 				$(EVENT_DIR)event.cpp \
 				$(EVENT_DIR)happening.cpp \
+				$(MOB_DIR)mob.cpp \
+				$(MOB_DIR)action.cpp \
 
 OBJ 		= $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 

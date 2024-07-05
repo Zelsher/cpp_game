@@ -121,16 +121,28 @@ void	Display::DRAW_Events()
 	}
 }
 
+void	Display::DRAW_Mobs()
+{
+	Vector2 pos;
+	for (size_t i = 0; i < mobs->size(); i++)
+	{
+		pos = (*mobs)[i].GET_Pos();
+		DrawTexture((*mobs)[i].GET_Texture(0), pos.x * TILE_SIZE, pos.y * TILE_SIZE, WHITE);
+	}
+}
+
 void	Display::DISPLAY_Game(int id)
 {
 	//cout << "posYX[" << player[id].GET_PosY() << "][" << player[id].GET_PosX() << "] " << (*map)[(int)player[id].GET_PosY()][(int)player[id].GET_PosX()] << endl;
+	GET_Display_Width(id);
 	BeginDrawing();
 	ClearBackground(DARKGRAY);
 	BeginMode2D(camera);
 
-	DRAW_Background(id);
+	DRAW_Background();
 	DRAW_Player(id);
 	DRAW_Events();
+	DRAW_Mobs();
 	DrawFPS(0, 0);
 	EndMode2D();
 	EndDrawing();

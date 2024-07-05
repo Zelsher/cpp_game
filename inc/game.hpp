@@ -1,6 +1,6 @@
 #ifndef HEADER_HPP
 # define HEADER_HPP
-
+//vector<vector<Cell>>	*map;
 using namespace std;
 
 #define WIDTH 2200
@@ -16,35 +16,19 @@ using namespace std;
 # include <stdio.h>
 # include <time.h>
 # include "raylib.h"
+# include <cmath>
+# include <fstream>
+# include <vector>
+# include <iostream>
+# include <string>
 
-#include <cmath>
-#include <fstream>
-#include <vector>
-#include <iostream>
-#include <string>
+#include "struct_def.hpp"
 #include "map.hpp"
 #include "player.hpp"
 #include "item.hpp"
 #include "event.hpp"
 #include "functions.hpp"
-
-
-
-typedef struct s_texture
-{
-	Texture2D	ground_1;
-	Texture2D	wall_1;
-	Texture2D	house_1;
-	Texture2D	tree_1;
-	Texture2D	player_1;
-	Texture2D	player_2;
-	Texture2D	r_hand;
-	Texture2D	l_hand;
-	Texture2D	tile1;
-	Texture2D	tile2;
-	Texture2D	item[10];
-}			t_texture;
-
+#include "mob.hpp"
 
 class Display
 {
@@ -53,25 +37,31 @@ class Display
 		Player					*player;
 		t_texture				*texture;
 		Event					*event;
+		vector<Mob>				*mobs;
 		vector<vector<Cell>>	*map;
 
 		int						n_cam;
 		int						width;
 		int						height;
+		Vector2					display_Max;
+		Vector2					display_Min;
+
 		Vector2					display_size;//taille du fond afficher
 		int						map_width;
 		int						map_height;
 		
 	public:
 		Display(Player* player_list);
-		void		DRAW_Background(int id);
+		void		DRAW_Background();
 		void		DRAW_Player_Item(int id);
 		void		DRAW_Player(int id);
 		void		DRAW_Events();
+		void		DRAW_Mobs();
 
 		void		DISPLAY_Game(int id);
 		void		UPDATE_Image();
 
+		void		GET_Display_Width(int id);
 		void		UPDATE_Display();
 		int			COUNT_Player(Player *player);
 
@@ -79,6 +69,7 @@ class Display
 		void		SET_Camera();
 		void		SET_Map(vector<vector<Cell>> *n_map, t_texture *map_texure, int width, int height);
 		void		SET_Event(Event *n_event) { event = n_event; }
+		void		SET_Mobs(vector<Mob> *n_mobs) { mobs = n_mobs; }
 };
 
 class Game
@@ -88,6 +79,7 @@ class Game
 		Display					display;
 		Event					event;
 		t_texture				texture;
+		vector<Mob>				mobs;
 		vector<vector<Cell>>	map;
 
 	public:
@@ -106,6 +98,8 @@ class Game
 		float 		PLAYER_PosY(int id) const {return (player[id].GET_PosY()); }
 		float 		PLAYER_Dir(int id) const {return (player[id].GET_Rot());}
 		string		GET_Name_Player(int id) const { return player[id].GET_Name(); }
+
+		void		CREATE_Mob(int type, Vector2 pos);
 
 		Player		*GET_Player(int id) { return(&player[id]); }
 		Event		*GET_Event() { return &event; }
