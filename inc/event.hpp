@@ -14,19 +14,22 @@ class Happening
 		int	happen;// temps ecoule pour lhappening
 
 		Vector2	pos;
+		float	dir;
 
 		float	incrX;
 		float	incrY;
 		Texture	*texture;
 	public:
 		Happening();
-		Happening(int type, Vector2 origin_pos, Vector2 use_pos, Game *game);
+		Happening(int type, Vector2 origin_pos, Vector2 use_pos, Game *game, int speed);
 		~Happening();
 
 		int	UPDATE_Happening(vector<vector<Cell>> *map);
 
-		Vector2	GET_Pos() { return pos; }
-		Texture	GET_Texture() { return *texture; }
+		Vector2		GET_Pos() { return pos; }
+		Texture		GET_Texture() { return *texture; }
+		float		GET_Dir() { return dir; }
+		int			GET_Type() { return type; }
 };
 
 class Event
@@ -39,7 +42,7 @@ class Event
 		~Event();
 
 		Event	*EVENT() { return this; }
-		void	ADD_Event(int type, Vector2 origin_pos, Vector2 use_pos, Game *game);
+		void	ADD_Event(int type, Vector2 origin_pos, Vector2 use_pos, Game *game, int speed);
 		void	UPDATE_EVENTS(vector<vector<Cell>> *map);
 
 		Happening	HAPPENING(int id) { return happening[id]; }

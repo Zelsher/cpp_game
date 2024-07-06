@@ -30,9 +30,9 @@ class Player
 		Vector2	dir;
 		float	rot;
 
-		bool	run;
-		float	hp;
-		float	speed;
+		bool		run;
+		float		hp;
+		float		speed;
 		Ressource	stamina;
 		Ressource	mana;
 
@@ -56,6 +56,7 @@ class Player
 		void	ADD_PosY(float new_posY);
 		void	ADD_Stamina(float i);
 		void	ADD_Mana(float i);
+		void	ADD_Hp(float i);
 		void	ADD_Item(Item item);
 
 

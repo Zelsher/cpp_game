@@ -23,6 +23,7 @@ void	Game::HANDLE_Input(int id)
 	if (player[id].GET_Stamina_V() <= 0)
 		player[id].STOP_Run();
 
+	map[(int)player[id].GET_PosY()][(int)player[id].GET_PosX()].DELETE_Player();
 //Handle Moove
 	if (IsKeyReleased(KEY_SPACE))
 		(void)player;//pause
@@ -50,7 +51,8 @@ void	Game::HANDLE_Input(int id)
 
 	if (IsKeyDown(KEY_R))
 		player[id].RELOAD_Weapons();
-
+	
+	map[(int)player[id].GET_PosY()][(int)player[id].GET_PosX()].MAP_Player(&player[id]);
 //Set Rotation
 	display.GET_Camera(id)->target = (Vector2){(player[id].GET_PosX() * TILE_SIZE - (WIDTH / 2) / display.GET_Camera(id)->zoom), (player[id].GET_PosY() * TILE_SIZE - (HEIGHT / 2) / display.GET_Camera(id)->zoom)};
 	player[id].SET_Dir(mouse_pos.x / TILE_SIZE - player[id].GET_PosX(), mouse_pos.y / TILE_SIZE - player[id].GET_PosY());

@@ -26,9 +26,6 @@ void	Display::DRAW_Background()
 	{
 	  for (int x = display_Max.x; x >= display_Min.x; x--)
  		{
-			//cout << "y" << y_min << " " << y_max << endl;
-			//cout << "x" << x_min << " " << x_max << endl;
-			//cout << "[" << y << "] " << "[" << x << "]" << endl;
 			type = (*map)[y][x].GET_Type();
 			if (type == GROUND || type == HOUSE || type == HOUSE_BASE
 				|| type == TREE || type == TREE_BASE)
@@ -36,7 +33,7 @@ void	Display::DRAW_Background()
 			else if (type == WALL)
 				DrawTexture(texture->wall_1, x * TILE_SIZE, y * TILE_SIZE, WHITE);
 			else if (type == BRICK_GROUND)
-				DrawTexture(texture->wall_1, x * TILE_SIZE, y * TILE_SIZE, WHITE);
+				DrawTexture(texture->ground_2, x * TILE_SIZE, y * TILE_SIZE, WHITE);
 			
 			if (type == TREE_BASE)
 				DrawTexture(texture->tree_1, x * TILE_SIZE, y * TILE_SIZE, WHITE);

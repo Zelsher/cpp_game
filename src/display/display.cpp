@@ -116,18 +116,29 @@ void	Display::DRAW_Events()
 	for (int i = 0; i < n_happening ; i++)
 	{
 		pos = event->HAPPENING(i).GET_Pos();
-		if (IN_Map(map, pos.x, pos.y))
-			DrawTexture(event->HAPPENING(i).GET_Texture(), event->HAPPENING(i).GET_Pos().x * TILE_SIZE - TILE_SIZE / 4, event->HAPPENING(i).GET_Pos().y * TILE_SIZE - TILE_SIZE / 4, WHITE);
+		
+		//verifer que cest dans le display
+		if (event->HAPPENING(i).GET_Type() == SHOOT)
+		DrawTexturePro(event->HAPPENING(i).GET_Texture(), 
+				Rectangle{0, 0, 16, 16},
+                { event->HAPPENING(i).GET_Pos().x * TILE_SIZE - 8, event->HAPPENING(i).GET_Pos().y * TILE_SIZE + 8, 16, 16},
+            	{ 16, 16 }, event->HAPPENING(i).GET_Dir(), RAYWHITE);
 	}
 }
 
 void	Display::DRAW_Mobs()
 {
+	int lifebar;
 	Vector2 pos;
 	for (size_t i = 0; i < mobs->size(); i++)
 	{
 		pos = (*mobs)[i].GET_Pos();
-		DrawTexture((*mobs)[i].GET_Texture(0), pos.x * TILE_SIZE, pos.y * TILE_SIZE, WHITE);
+		lifebar = (*mobs)[i].GET_Hp() * TILE_SIZE / 110;
+		DrawRectangle(pos.x * TILE_SIZE - TILE_SIZE / 2, pos.y * TILE_SIZE - TILE_SIZE, TILE_SIZE, TILE_SIZE / 4, DARKGRAY);
+		DrawRectangle(pos.x * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05, pos.y * TILE_SIZE - TILE_SIZE *0.95, lifebar, TILE_SIZE / 7, RED);
+		
+		DrawTexture((*mobs)[i].GET_Texture(0), pos.x * TILE_SIZE - TILE_SIZE / 2, pos.y * TILE_SIZE - TILE_SIZE / 2, WHITE);
+	
 	}
 }
 

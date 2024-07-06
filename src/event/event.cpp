@@ -8,10 +8,10 @@ Event::~Event()
 {
 }
 
-void	Event::ADD_Event(int type, Vector2 origin_pos, Vector2 use_pos, Game *game)
+void	Event::ADD_Event(int type, Vector2 origin_pos, Vector2 use_pos, Game *game, int speed)
 {
-	Happening *temp = new Happening(type, origin_pos, use_pos, game);
-	happening.push_back(*temp);
+	Happening temp(type, origin_pos, use_pos, game, speed);
+	happening.push_back(temp);
 	last_happening++;
 }
 

@@ -1,24 +1,5 @@
 #include "../../inc/game.hpp"
 
-Vector2 FIND_Direction(Vector2 start_pos, Vector2 end_pos)
-{
-    Vector2 pos;
-
-	float y1 = end_pos.y;
-	float y0 = start_pos.y;
-	float x1 = end_pos.x;
-	float x0 = start_pos.x;
-
-    // Paramètres de la simulation
-    double v = 0.1; // vitesse constante (0.1 unité par seconde)
-    double theta = atan2(y1 - y0, x1 - x0);
-    pos.x = v * cos(theta);
-    pos.y = v * sin(theta);
-
-	//cout << pos.y  << " " <<  pos.x << endl;
-    return (pos);
-}
-
 void    Game::LOAD_Spawner(Vector3 pos)
 {
     cout << pos.x << " " << pos.y << " " << pos.z << endl;
@@ -49,7 +30,59 @@ int	IN_Map(vector<vector<Cell>> *map, float X, float Y)
 
 int NOT_Wall(vector<vector<Cell>> *map, float X, float Y)
 {
-    if (!IN_Map(map, X, Y) || (*map)[(int)Y][(int)X].GET_Type() != GROUND)
+    if (!IN_Map(map, X, Y)
+        || ((*map)[(int)Y][(int)X].GET_Type() != GROUND && (*map)[(int)Y][(int)X].GET_Type() != BRICK_GROUND))
         return (0);
     return (1);
+}
+
+Mob*		Cell::GET_Mob(int id) 
+{
+    if (id < (int)mob.size())
+        return(mob[id]);
+    return (NULL);
+}
+
+vector<vector<Cell>> Game::OPEN_Map(string file)
+{
+    vector<vector<Cell>> map;
+	string ligne;
+	ifstream fichier(file);
+    if (!fichier.is_open()) 
+	{
+        cerr << "Erreur d'ouverture du fichier!" << endl;
+        exit(1);
+    }
+    int y = 0;
+    int x = 0;
+    while (getline(fichier, ligne)) 
+	{
+        vector<Cell> ligneCarte;
+        for (Cell c : ligne) 
+		{
+            ligneCarte.push_back(c);
+            if (c.GET_Type() >= 48 && c.GET_Type() <= 57)
+                LOAD_Spawner(Vector3{(float)x, (float)y, (float)(c.GET_Type() - '0')});
+            x++;
+        }
+        map.push_back(ligneCarte);
+        y++;
+		x = 0;
+    }
+    fichier.close();
+    return (map);
+}
+void	Game::CHOSE_Lvl()
+{
+	int	width;
+	int	height;
+
+	int	lvl = 1;//Offrir un choix
+		if (lvl == 1)
+	map = OPEN_Map("asset/map/map.txt");
+	width = map[1].size();
+	height = map.size();
+	LOAD_Texture();
+	display.SET_Map(&map, &texture, width, height);
+	//Mettre / les joueur sur P
 }

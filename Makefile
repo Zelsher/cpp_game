@@ -30,6 +30,7 @@ SRC			=	$(GAME_DIR)main.cpp \
 				$(ITEM_DIR)item_use.cpp \
 				$(ITEM_DIR)ressource.cpp \
 				$(MAP_DIR)map.cpp \
+				$(MAP_DIR)utils.cpp \
 				$(EVENT_DIR)event.cpp \
 				$(EVENT_DIR)happening.cpp \
 				$(MOB_DIR)mob.cpp \

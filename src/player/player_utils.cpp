@@ -24,6 +24,11 @@ void	Player::ADD_Mana(float i)
 		mana.ADD_Value(i);
 }
 
+void	Player::ADD_Hp(float i)
+{
+	hp += i;
+}
+
 void	Player::ADD_PosX(float new_posX)
 {
 	posX += new_posX;
