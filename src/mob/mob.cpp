@@ -3,6 +3,7 @@
 Mob::Mob(Game *p_game, t_texture_pack *p_texture, int n_type, Vector2 n_pos)
 {
 	death = 0;
+	sleeping = 1;
 	game = p_game;
 	texture = p_texture;
 	type = n_type;

@@ -14,22 +14,16 @@ int		Mob::COOLDOWN()
 void	Mob::MOOVE_Ennemy(vector<vector<Cell>> *map)
 {
 	Vector2	dir;
-	Mob		*p_mob;
 	int		dist_player;
-	
-	int i = 0;// !!!!!!!!1 changer sa pour que tout se supprime a chaque update directement
-	while ((p_mob = (*map)[pos.y][pos.x].GET_Mob(i)))
-	{
-		if (this == p_mob)
-			(*map)[pos.y][pos.x].DELETE_Mob(i);
-		i++;
-	}
+
 	dist_player = game->PLAYER_PosX(0) - pos.x + game->PLAYER_PosY(0) - pos.x;
-	if (dist_player > 15 || dist_player < -15)
+	if (this->SLEEPING() && (dist_player > 15 || dist_player < -15))
 	{
 		(*map)[pos.y][pos.x].MAP_Mob(this);
 		return;
 	}
+	else
+		WAKE_Up();
 	dir	= FIND_Direction(pos, Vector2 {game->PLAYER_PosX(0), game->PLAYER_PosY(0)});
 	if (NOT_Wall(map, pos.x + dir.x / 2, pos.y))
 		pos.x += dir.x / 2;
