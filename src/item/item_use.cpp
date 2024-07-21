@@ -75,7 +75,7 @@ void	Item::USE(Vector2 player_pos, Vector2 use_pos, Player *player, vector<vecto
 	}
 	else if (type == MAGIC_STICK && ressource->GET_Value() >= 20)
 	{
-		game->GET_Event()->ADD_Event(MAGIC_SPELL, player_pos, use_pos, game, 0);
+		game->GET_Event()->ADD_Event(MAGIC_SPELL, player_pos, use_pos, game, 0, 0);
 		ressource->ADD_Value(-20);
 		PlaySound(audio.use);
 		COOLDOWN();
@@ -86,13 +86,13 @@ void	Item::USE(Vector2 player_pos, Vector2 use_pos, Player *player, vector<vecto
 		{
 			ressource->ADD_Value(-10);
 			PlaySound(audio.use);
-			game->GET_Event()->ADD_Event(SHOOT, player_pos, use_pos, game, 8);
+			game->GET_Event()->ADD_Event(SHOOT, player_pos, use_pos, game, 4, damage);
 		}
 		if (type == UZI && ressource->GET_Value() >= 2)
 		{
-			ressource->ADD_Value(0);
+			ressource->ADD_Value(-4);
 			PlaySound(audio.use);
-			game->GET_Event()->ADD_Event(SHOOT, player_pos, use_pos, game, 8);
+			game->GET_Event()->ADD_Event(SHOOT, player_pos, use_pos, game, 4, damage);
 		}
 		COOLDOWN();
 	}

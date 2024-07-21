@@ -2,19 +2,19 @@
 
 void	Display::GET_Display_Width(int id)
 {
-	display_Min.y = (player[id].GET_PosY() - ((HEIGHT / TILE_SIZE) / 2) / GET_Camera(id)->zoom) - 4;
+	display_Min.y = (player[id].GET_Pos().y - ((HEIGHT / TILE_SIZE) / 2) / GET_Camera(id)->zoom) - 4;
 	if (display_Min.y < 0)
 		display_Min.y = 0;
 
-	display_Max.y = (player[id].GET_PosY() + ((HEIGHT / TILE_SIZE) / 2) / GET_Camera(id)->zoom) + 1;
+	display_Max.y = (player[id].GET_Pos().y + ((HEIGHT / TILE_SIZE) / 2) / GET_Camera(id)->zoom) + 1;
 	if (display_Max.y > (int)map->size() - 1)
 		display_Max.y = (int)map->size() - 1;
 
-	display_Min.x = (player[id].GET_PosX() - ((WIDTH / TILE_SIZE) / 2) / GET_Camera(id)->zoom) - 4;
+	display_Min.x = (player[id].GET_Pos().x - ((WIDTH / TILE_SIZE) / 2) / GET_Camera(id)->zoom) - 4;
 	if (display_Min.x < 0)
 		display_Min.x = 0;
 
-	display_Max.x = (player[id].GET_PosX() + ((WIDTH / TILE_SIZE) / 2) / GET_Camera(id)->zoom) + 2;
+	display_Max.x = (player[id].GET_Pos().x + ((WIDTH / TILE_SIZE) / 2) / GET_Camera(id)->zoom) + 2;
 	if (display_Max.x > (int)(*map)[0].size() - 1)
 		display_Max.x = (int)(*map)[0].size() - 1;
 }

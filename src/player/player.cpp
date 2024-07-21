@@ -12,7 +12,8 @@ int	Player::ACTIVATE_Player(string new_name, int new_id)
 	name = new_name;
 	enable = 1;
 	switch_sound = LoadSound("asset/texture/Swap.mp3");
-	//fill pos
+	pos.x = 1;
+	pos.y = 1;
 	return (0);
 }
 

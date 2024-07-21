@@ -10,7 +10,7 @@ Happening::Happening()
 	duration = 0;
 }
 
-Happening::Happening(int n_type, Vector2 origin_pos, Vector2 use_pos, Game *game, int speed)
+Happening::Happening(int n_type, Vector2 origin_pos, Vector2 use_pos, Game *game, int speed, float dmg)
 {
 	Vector2	n_pos;
 	type = n_type;
@@ -19,6 +19,7 @@ Happening::Happening(int n_type, Vector2 origin_pos, Vector2 use_pos, Game *game
 	pos.x = origin_pos.x;
 	pos.y = origin_pos.y;
 	dir = 0;
+	damage = dmg;
 	if (type == MAGIC_SPELL)
 	{
 		pos.x = use_pos.x;
@@ -52,10 +53,14 @@ int	Happening::UPDATE_Happening(vector<vector<Cell>> *map)
 	//cout << "[" << pos.y << "][" << pos.x << "]" << endl;
 	Player	*p_player;
 	Mob		*p_mob;
+	Boss	*p_boss;
 
 	if ((duration && duration < happen)
 		|| !NOT_Wall(map, pos.x + incrX, pos.y + incrY))
+	{
+		cout << "Wall hitted" << endl;
 		return(0);
+	}
 	if (type == SHOOT)
 	{
 		int	dist_y;
@@ -66,10 +71,11 @@ int	Happening::UPDATE_Happening(vector<vector<Cell>> *map)
 		p_player = (*map)[pos.y][pos.x].PLAYER_Near();
 		if (p_player)
 		{
-			dist_x = p_player->GET_PosX() - pos.x;
-			dist_y = p_player->GET_PosY() - pos.y;
+			dist_x = p_player->GET_Pos().x - pos.x;
+			dist_y = p_player->GET_Pos().y - pos.y;
 			if ((dist_x > -0.2 && dist_x < 0.2) && (dist_y > -0.2 && dist_y < 0.2))
 				p_player->ADD_Hp(-5);
+			cout << "Player hitted" << endl;
 			return (0);
 		}
 		int i = 0;
@@ -79,7 +85,20 @@ int	Happening::UPDATE_Happening(vector<vector<Cell>> *map)
 			dist_y = p_mob->GET_Pos().y - pos.y;
 			if ((dist_x > -0.2 && dist_x < 0.2) && (dist_y > -0.2 && dist_y < 0.2))
 				p_mob->ADD_Hp(-10);
+			cout << "Mob hitted" << endl;
 			i++;
+			return (0);
+		}
+		i = 0;
+		if ((p_boss = (*map)[pos.y][pos.x].GET_Boss(i)))
+		{
+			if (p_boss->HIT_Hitbox(pos))
+			{
+				p_boss->ADD_Hp(-5);
+				cout << "Boss hitted" << endl;
+				i++;
+				return (0);
+			}
 		}
 	}
 	happen++;

@@ -24,3 +24,9 @@ void	Game::CREATE_Mob(int type, Vector2 pos)
 	Mob	ennemy(this, &texture.texture_pack, type, pos);
 	mobs.push_back(ennemy);
 }
+
+void	Game::CREATE_Boss(int type, Vector2 pos)
+{
+	Boss n_boss(this, &texture.texture_pack, type, pos);
+	boss.push_back(n_boss);
+}

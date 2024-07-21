@@ -65,6 +65,7 @@ class Item
 		void		SET_Item(int w_type, Ressource *Ressource);
 		
 		int			GET_Type() { return(type); }
+		float		GET_Dmg() { return(damage); }
 		Color		GET_Color() { return(ressource->GET_Color()); }
 		
 		Ressource	*GET_Ressource() { return(ressource); }

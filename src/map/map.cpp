@@ -43,6 +43,13 @@ Mob*		Cell::GET_Mob(int id)
     return (NULL);
 }
 
+Boss*		Cell::GET_Boss(int id) 
+{
+    if (id < (int)boss.size())
+        return(boss[id]);
+    return (NULL);
+}
+
 vector<vector<Cell>> Game::OPEN_Map(string file)
 {
     vector<vector<Cell>> map;
@@ -79,7 +86,7 @@ void	Game::CHOSE_Lvl()
 
 	int	lvl = 1;//Offrir un choix
 		if (lvl == 1)
-	map = OPEN_Map("asset/map/map.txt");
+	map = OPEN_Map("asset/map/map2");
 	width = map[1].size();
 	height = map.size();
 	LOAD_Texture();

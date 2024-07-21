@@ -31,11 +31,11 @@ void	Player::ADD_Hp(float i)
 
 void	Player::ADD_PosX(float new_posX)
 {
-	posX += new_posX;
+	pos.x += new_posX;
 }
 void	Player::ADD_PosY(float new_posY)
 {
-	posY += new_posY;
+	pos.y += new_posY;
 }
 
 Item	*Player::GET_Hand(int hand)

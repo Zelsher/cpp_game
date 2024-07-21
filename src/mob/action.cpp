@@ -31,7 +31,7 @@ void	Mob::MOOVE_Ennemy(vector<vector<Cell>> *map)
 		pos.y += dir.y / 2;
 	(*map)[pos.y][pos.x].MAP_Mob(this);
 	if (COOLDOWN())
-		game->GET_Event()->ADD_Event(SHOOT, pos, game->GET_Player(0)->GET_Pos(), game, 4);
+		game->GET_Event()->ADD_Event(SHOOT, pos, game->GET_Player(0)->GET_Pos(), game, 4, 5);
 }
 
 void	Mob::MOOVE_Sleeper(vector<vector<Cell>> *map)
@@ -61,7 +61,7 @@ void	Mob::MOOVE_Sleeper(vector<vector<Cell>> *map)
 		pos.y += dir.y / 2;
 	if (COOLDOWN())
 	{
-		game->GET_Event()->ADD_Event(SHOOT, pos, game->GET_Player(0)->GET_Pos(), game, 4);
+		game->GET_Event()->ADD_Event(SHOOT, pos, game->GET_Player(0)->GET_Pos(), game, 4, 5);
 	}
 }
 
@@ -69,7 +69,6 @@ int	Mob::ACTION(vector<vector<Cell>> *map)
 {
 	if (hp <= 0)
 	{
-		cout << death << endl;
 		if (death == 750)
 			return(0);
 		death++;

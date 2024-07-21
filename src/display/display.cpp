@@ -50,35 +50,35 @@ void	Display::DRAW_Player_Item(int id)
 
 	if (!player[id].GET_Hand(LEFT)->EMPTY())//Left
 	{
-		DrawTexture(texture->item[player[id].GET_Hand(LEFT)->GET_Type()], player[id].GET_PosX() * TILE_SIZE - TILE_SIZE,
-			player[id].GET_PosY() * TILE_SIZE - TILE_SIZE, WHITE);
+		DrawTexture(texture->item[player[id].GET_Hand(LEFT)->GET_Type()], player[id].GET_Pos().x * TILE_SIZE - TILE_SIZE,
+			player[id].GET_Pos().y * TILE_SIZE - TILE_SIZE, WHITE);
 	
 		if (player[id].GET_Hand(LEFT)->GET_Ressource_Type() != MANA)
 		{
 			ressource_bar = (player[id].GET_Hand(LEFT)->GET_Ressource()->GET_Value() * TILE_SIZE / 115) / 2;
-			DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE + TILE_SIZE * 0.05,
-				player[id].GET_PosY() * TILE_SIZE - TILE_SIZE *0.60, ressource_bar, TILE_SIZE / 10, player[id].GET_Hand(LEFT)->GET_Color());
+			DrawRectangle(player[id].GET_Pos().x * TILE_SIZE - TILE_SIZE + TILE_SIZE * 0.05,
+				player[id].GET_Pos().y * TILE_SIZE - TILE_SIZE *0.60, ressource_bar, TILE_SIZE / 10, player[id].GET_Hand(LEFT)->GET_Color());
 		}
 	}
 	else
-		DrawTexture(texture->l_hand, player[id].GET_PosX() * TILE_SIZE - TILE_SIZE * 1,
-			player[id].GET_PosY() * TILE_SIZE - TILE_SIZE, WHITE);
+		DrawTexture(texture->l_hand, player[id].GET_Pos().x * TILE_SIZE - TILE_SIZE * 1,
+			player[id].GET_Pos().y * TILE_SIZE - TILE_SIZE, WHITE);
 
 	if (!player[id].GET_Hand(RIGHT)->EMPTY())//right
 	{
-		DrawTexture(texture->item[player[id].GET_Hand(RIGHT)->GET_Type()], player[id].GET_PosX() * TILE_SIZE + TILE_SIZE / 2,
-			player[id].GET_PosY() * TILE_SIZE - TILE_SIZE, WHITE);
+		DrawTexture(texture->item[player[id].GET_Hand(RIGHT)->GET_Type()], player[id].GET_Pos().x * TILE_SIZE + TILE_SIZE / 2,
+			player[id].GET_Pos().y * TILE_SIZE - TILE_SIZE, WHITE);
 		
 		if (player[id].GET_Hand(RIGHT)->GET_Ressource_Type() != MANA)
 		{
 			ressource_bar = (player[id].GET_Hand(RIGHT)->GET_Ressource()->GET_Value() * TILE_SIZE / 115) / 2;
-			DrawRectangle(player[id].GET_PosX() * TILE_SIZE + TILE_SIZE / 2,
-				player[id].GET_PosY() * TILE_SIZE - TILE_SIZE *0.60, ressource_bar, TILE_SIZE / 10, player[id].GET_Hand(RIGHT)->GET_Color());
+			DrawRectangle(player[id].GET_Pos().x * TILE_SIZE + TILE_SIZE / 2,
+				player[id].GET_Pos().y * TILE_SIZE - TILE_SIZE *0.60, ressource_bar, TILE_SIZE / 10, player[id].GET_Hand(RIGHT)->GET_Color());
 		}
 	}
 	else
-		DrawTexture(texture->r_hand, player[id].GET_PosX() * TILE_SIZE + TILE_SIZE / 2,
-			player[id].GET_PosY() * TILE_SIZE - TILE_SIZE, WHITE);
+		DrawTexture(texture->r_hand, player[id].GET_Pos().x * TILE_SIZE + TILE_SIZE / 2,
+			player[id].GET_Pos().x * TILE_SIZE - TILE_SIZE, WHITE);
 }
 
 void	Display::DRAW_Player(int id)
@@ -90,21 +90,21 @@ void	Display::DRAW_Player(int id)
 
 	
 	DrawTexturePro(texture->player_1, Rectangle{0, 0, TILE_SIZE, TILE_SIZE},
-                       { player[id].GET_PosX() * TILE_SIZE, player[id].GET_PosY() * TILE_SIZE, TILE_SIZE, TILE_SIZE},
+                       { player[id].GET_Pos().x * TILE_SIZE, player[id].GET_Pos().y * TILE_SIZE, TILE_SIZE, TILE_SIZE},
                        { TILE_SIZE/2, TILE_SIZE/2 },
 					   player[id].GET_Rot(), RAYWHITE);
 
 	textWidth = MeasureText(player[id].GET_Name().c_str(), TILE_SIZE / 2);
-	DrawText(player[id].GET_Name().c_str(), player[id].GET_PosX() * TILE_SIZE - textWidth / 2, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE * 1.5, TILE_SIZE / 2, WHITE);
+	DrawText(player[id].GET_Name().c_str(), player[id].GET_Pos().x * TILE_SIZE - textWidth / 2, player[id].GET_Pos().y * TILE_SIZE - TILE_SIZE * 1.5, TILE_SIZE / 2, WHITE);
 	
 	//HUD Relativ
 	lifebar = player[id].GET_Hp() * TILE_SIZE / 110;
 	staminabar = (player[id].GET_Stamina_V() * TILE_SIZE / 110);
 	manabar = (player[id].GET_Mana_V() * TILE_SIZE / 110);
-	DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE, TILE_SIZE, TILE_SIZE / 2, DARKGRAY);
-	DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE *0.95, lifebar, TILE_SIZE / 7, RED);
-	DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE *0.75, staminabar, TILE_SIZE / 10, GREEN);
-	DrawRectangle(player[id].GET_PosX() * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05, player[id].GET_PosY() * TILE_SIZE - TILE_SIZE *0.60, manabar, TILE_SIZE / 10, DARKBLUE);
+	DrawRectangle(player[id].GET_Pos().x * TILE_SIZE - TILE_SIZE / 2, player[id].GET_Pos().y * TILE_SIZE - TILE_SIZE, TILE_SIZE, TILE_SIZE / 2, DARKGRAY);
+	DrawRectangle(player[id].GET_Pos().x * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05, player[id].GET_Pos().y * TILE_SIZE - TILE_SIZE *0.95, lifebar, TILE_SIZE / 7, RED);
+	DrawRectangle(player[id].GET_Pos().x * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05, player[id].GET_Pos().y * TILE_SIZE - TILE_SIZE *0.75, staminabar, TILE_SIZE / 10, GREEN);
+	DrawRectangle(player[id].GET_Pos().x * TILE_SIZE - TILE_SIZE / 2 + TILE_SIZE * 0.05, player[id].GET_Pos().y * TILE_SIZE - TILE_SIZE *0.60, manabar, TILE_SIZE / 10, DARKBLUE);
 	
 	DRAW_Player_Item(id);
 }
@@ -142,6 +142,42 @@ void	Display::DRAW_Mobs()
 	}
 }
 
+void	Draw_Hitbox(Vector2 *hitbox, Boss boss)
+{
+	for (int i = 0; i < boss.GET_Hitbox_n(); i++)
+	{
+		DrawLine((hitbox[i].x + boss.GET_Pos().x) * TILE_SIZE, (hitbox[i].y + boss.GET_Pos().y) * TILE_SIZE,
+			(hitbox[i + 1].x + boss.GET_Pos().x) * TILE_SIZE, (hitbox[i + 1].y + boss.GET_Pos().y) * TILE_SIZE, YELLOW);
+		if (i + 1 == boss.GET_Hitbox_n())
+		{
+			DrawLine((hitbox[i + 1].x + boss.GET_Pos().x) * TILE_SIZE, (hitbox[i + 1].y + boss.GET_Pos().y) * TILE_SIZE,
+				(hitbox[0].x + boss.GET_Pos().x) * TILE_SIZE, (hitbox[0].y + boss.GET_Pos().y) * TILE_SIZE, YELLOW);
+		}
+	}
+	
+}
+
+void	Display::DRAW_Boss()
+{
+	int lifebar;
+	int	n_lifebar = TILE_SIZE * 0.9;
+	Vector2 pos;
+	for (size_t i = 0; i < boss->size(); i++)
+	{
+		pos = (*boss)[i].GET_Pos();
+		lifebar = (*boss)[i].GET_Hp() * WIDTH / 110;
+		DrawTexture((*boss)[i].GET_Texture(0), pos.x * TILE_SIZE - TILE_SIZE * 2, pos.y * TILE_SIZE - TILE_SIZE * 2, WHITE);
+		Draw_Hitbox((*boss)[i].GET_Boss_Hitbox(), (*boss)[i]);		
+		if ((*boss)[i].SLEEPING())
+		{
+			n_lifebar += TILE_SIZE * 0.6;
+			cout << i << endl;
+			DrawRectangle(player->GET_Pos().x * TILE_SIZE - WIDTH / 2, player->GET_Pos().y * TILE_SIZE - HEIGHT / 2 + n_lifebar, WIDTH, TILE_SIZE * 0.5, DARKGRAY);
+			DrawRectangle(player->GET_Pos().x * TILE_SIZE - WIDTH / 2 + TILE_SIZE * 2, player->GET_Pos().y * TILE_SIZE - HEIGHT / 2 + n_lifebar + TILE_SIZE * 0.10, lifebar, TILE_SIZE * 0.30, RED);
+		}
+	}
+}
+
 void	Display::DISPLAY_Game(int id)
 {
 	//cout << "posYX[" << player[id].GET_PosY() << "][" << player[id].GET_PosX() << "] " << (*map)[(int)player[id].GET_PosY()][(int)player[id].GET_PosX()] << endl;
@@ -154,6 +190,7 @@ void	Display::DISPLAY_Game(int id)
 	DRAW_Player(id);
 	DRAW_Events();
 	DRAW_Mobs();
+	DRAW_Boss();
 	DrawFPS(0, 0);
 	EndMode2D();
 	EndDrawing();

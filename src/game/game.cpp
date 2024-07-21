@@ -2,15 +2,71 @@
 
 //Game
 
+void	Game::UPDATE_Spawner()
+{
+	for (size_t i = 0; i < spawner.size(); i++)
+	{
+		//cout << spawner[i].z << endl;
+		if (spawner[i].z && rand()%9 + 1 < spawner[i].z)
+		{
+			//cout << spawner[i].x << " " << spawner[i].y << endl;
+			CREATE_Mob(ENNEMY, Vector2{spawner[i].x, spawner[i].y});
+		}
+	}
+}
+
+void	Game::UPDATE_Game()
+{
+	int	verif;
+	while (!IsWindowFocused())
+	{
+		BeginDrawing();
+		ClearBackground(BLACK);
+		EndDrawing();
+	}
+
+	HANDLE_Input(0);
+
+	player[0].UPDATE_Items();
+
+	event.UPDATE_EVENTS(&map);
+
+	for (size_t i = 0; i < mobs.size() || i < boss.size(); i++)
+	{
+		if (i < mobs.size())
+		{
+			verif = mobs[i].ACTION(&map);
+			if (verif == 0)
+				mobs.erase(mobs.begin() + i);
+		}
+		if (i < boss.size())
+		{
+			verif = boss[i].UPDATE_Boss(&map);
+			if (verif == 0)
+				boss.erase(boss.begin() + i);
+		}
+	}
+
+	if (frame % 50 == 0)
+		UPDATE_Spawner();
+
+	if (frame == 100000)
+		frame = 0;
+	display.UPDATE_Image();
+	frame++;
+
+	if (player[0].IS_Inventory_Open())
+		(void)player[0];
+}
+
 Game::Game() : display(player), frame(0)
 {
 	InitWindow(WIDTH, HEIGHT, "game");
 	ClearBackground(BLACK);
-	SetTargetFPS(200);
+	SetTargetFPS(30);
 	InitAudioDevice();
 	CHOSE_Lvl();
-	display.SET_Event(&event);
-	display.SET_Mobs(&mobs);
+	display.SET_Event(&event, &boss, &mobs);
 }
 
 Game::~Game()
@@ -32,11 +88,14 @@ void		Game::LOAD_Texture()
 	texture.bullet_1 = LoadTexture("asset/texture/bullet_1.png");
 	texture.tile1 = LoadTexture("asset/texture/32.png");
 	texture.tile2 = LoadTexture("asset/texture/64.png");
+	texture.boss1 = LoadTexture("asset/texture/boss.png");
 	texture.item[TP_RING] = LoadTexture("asset/texture/Tp_Ring.png");
 	texture.item[MAGIC_STICK] = LoadTexture("asset/texture/32.png");
 	texture.item[PISTOL] = LoadTexture("asset/texture/Pistol.png");
 	texture.item[UZI] = LoadTexture("asset/texture/Uzi.png");
+
 	texture.texture_pack.ennemy = LoadTexture("asset/texture/character_1/Player_1.png");
+	texture.texture_pack.boss = LoadTexture("asset/texture/boss.png");
 	//texture.texture_pack.ennemy = LoadTexture("assest/texture/ennemy_texture_pack/1.png");
 }
 
@@ -52,52 +111,6 @@ int Game::ADD_Player(string name)
 	player[0].SET_PosY(1.5);
 	return (player[i].ACTIVATE_Player(name, i));
 	display.UPDATE_Display();
-}
-
-void	Game::UPDATE_Spawner()
-{
-	for (size_t i = 0; i < spawner.size(); i++)
-	{
-		//cout << spawner[i].z << endl;
-		if (spawner[i].z && rand()%9 + 1 < spawner[i].z)
-		{
-			//cout << spawner[i].x << " " << spawner[i].y << endl;
-			CREATE_Mob(ENNEMY, Vector2{spawner[i].x, spawner[i].y});
-		}
-	}
-}
-
-void	Game::UPDATE_Game()
-{
-	int	j;
-
-	if (!player[0].GET_Hp())
-	{
-		cout << "DEAD\n";
-		exit(0);
-	}
-	HANDLE_Input(0);
-
-	player[0].UPDATE_Items();
-
-	event.UPDATE_EVENTS(&map);
-
-	for (size_t i = 0; i < mobs.size(); i++)
-	{
-		j = mobs[i].ACTION(&map);
-		if (j == 0)
-			mobs.erase(mobs.begin() + i);
-	}
-	if (frame % 50 == 0)
-		UPDATE_Spawner();
-
-	if (frame == 100000)
-		frame = 0;
-	display.UPDATE_Image();
-	frame++;
-
-	if (player[0].IS_Inventory_Open())
-		(void)player[0];
 }
 
 //Display

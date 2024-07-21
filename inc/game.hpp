@@ -1,26 +1,28 @@
 #ifndef HEADER_HPP
 # define HEADER_HPP
 //vector<vector<Cell>>	*map;
-using namespace std;
 
-#define WIDTH 2200
-#define HEIGHT 1200
+#define WIDTH 800//1366 1980
+#define HEIGHT 600//768 1080
 
 #define	TILE_SIZE 64
 
 #define	RIGHT 1
 #define	LEFT 0
 
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <time.h>
-# include "raylib.h"
+# include "raylib/src/raylib.h"
 # include <cmath>
 # include <fstream>
 # include <vector>
 # include <iostream>
 # include <string>
+
+using namespace std;
 
 #include "struct_def.hpp"
 #include "map.hpp"
@@ -29,6 +31,7 @@ using namespace std;
 #include "event.hpp"
 #include "functions.hpp"
 #include "mob.hpp"
+#include "boss.hpp"
 
 class Display
 {
@@ -38,6 +41,7 @@ class Display
 		t_texture				*texture;
 		Event					*event;
 		vector<Mob>				*mobs;
+		vector<Boss>			*boss;
 		vector<vector<Cell>>	*map;
 
 		int						n_cam;
@@ -57,6 +61,7 @@ class Display
 		void		DRAW_Player(int id);
 		void		DRAW_Events();
 		void		DRAW_Mobs();
+		void		DRAW_Boss();
 
 		void		DISPLAY_Game(int id);
 		void		UPDATE_Image();
@@ -68,8 +73,7 @@ class Display
 		Camera2D	*GET_Camera(int id) { (void)id; return (&camera); }
 		void		SET_Camera();
 		void		SET_Map(vector<vector<Cell>> *n_map, t_texture *map_texure, int width, int height);
-		void		SET_Event(Event *n_event) { event = n_event; }
-		void		SET_Mobs(vector<Mob> *n_mobs) { mobs = n_mobs; }
+		void		SET_Event(Event *n_event, vector<Boss> *n_boss, vector<Mob> *n_mobs) { event = n_event; boss = n_boss; mobs = n_mobs; }
 };
 
 class Game
@@ -81,6 +85,7 @@ class Game
 	
 		Event					event;
 		vector<Mob>				mobs;
+		vector<Boss>			boss;
 		vector<Vector3>			spawner;//z=proba
 		vector<vector<Cell>>	map;
 
@@ -88,7 +93,7 @@ class Game
 
 	public:
 		Game();
-		~Game() noexcept;
+		~Game();
 
 		void					CHOSE_Lvl();
 		void					LOAD_Spawner(Vector3 pos);
@@ -101,13 +106,13 @@ class Game
 		void		UPDATE_Game();
 		
 		int 		ADD_Player(string name);
-		float 		PLAYER_PosX(int id) const {return (player[id].GET_PosX()); }
-		float 		PLAYER_PosY(int id) const {return (player[id].GET_PosY()); }
+		float 		PLAYER_PosX(int id) const {return (player[id].GET_Pos().x); }
+		float 		PLAYER_PosY(int id) const {return (player[id].GET_Pos().y); }
 		float 		PLAYER_Dir(int id) const {return (player[id].GET_Rot());}
 		string		GET_Name_Player(int id) const { return player[id].GET_Name(); }
 
 		void		CREATE_Mob(int type, Vector2 pos);
-
+		void		CREATE_Boss(int type, Vector2 pos);
 
 		Player		*GET_Player(int id) { return(&player[id]); }
 		Event		*GET_Event() { return &event; }

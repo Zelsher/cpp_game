@@ -15,6 +15,7 @@
 class Game;
 class Mob;
 class Player;
+class Boss;
 
 class Cell
 {
@@ -23,6 +24,7 @@ class Cell
 		int		step;
 
 		vector<Mob*>	mob;
+		vector<Boss*>	boss;
 
 		Player	*player;
 	public:
@@ -38,9 +40,16 @@ class Cell
 
 		void	MAP_Player(Player *n_player) { player = n_player; }
 		void	MAP_Mob(Mob *n_mob) { mob.push_back(n_mob); }
+		void	MAP_Boss(Boss *n_boss) 
+		{ 
+			if (boss.empty() || (!boss.empty() && n_boss != boss[0]))
+				boss.push_back(n_boss);
+		}//condition if a changer
 
 		void	DELETE_Player() { player = NULL; }
 		void	DELETE_Mob(int id) { mob.erase(mob.begin() + id); }
+		void	DELETE_Boss(Boss *p_boss) { (void)p_boss; boss.clear(); }
 		Mob		*GET_Mob(int id);
+		Boss	*GET_Boss(int id);
 		Player	*PLAYER_Near() { return(player); }
 };

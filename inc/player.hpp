@@ -25,8 +25,7 @@ class Player
 		string	name;
 		bool	enable;
 
-		float	posY;
-		float	posX;
+		Vector2	pos;
 		Vector2	dir;
 		float	rot;
 
@@ -48,9 +47,9 @@ class Player
 		void	UPDATE_Items();
 		bool	EXIST() const { return (enable); }
 	
-		void	SET_Pos(Vector2 pos) {	posX = pos.x;posY = pos.y; }
-		void	SET_PosX(float new_posX) { posX = new_posX; }
-		void	SET_PosY(float new_posY) { posY = new_posY; }
+		void	SET_Pos(Vector2 new_pos) {	pos.x = new_pos.x;pos.y = new_pos.y; }
+		void	SET_PosX(float new_posX) { pos.y = new_posX; }
+		void	SET_PosY(float new_posY) { pos.y = new_posY; }
 		void	SET_Dir(float x, float y);
 		void	ADD_PosX(float new_posX);
 		void	ADD_PosY(float new_posY);
@@ -78,9 +77,7 @@ class Player
 
 		float		GET_Speed() const { return speed; }
 		float		GET_Hp() const { return hp; }
-		Vector2		GET_Pos() const { return {posX, posY}; }
-		float		GET_PosX() const { return posX; }
-		float		GET_PosY() const { return posY; }
+		Vector2		GET_Pos() const { return pos; }
 		float		GET_Rot() const { return rot; }
 		string		GET_Name() const { return name; }
 };

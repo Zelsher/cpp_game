@@ -10,9 +10,14 @@ ITEM_DIR	= src/item/
 MAP_DIR		= src/map/
 EVENT_DIR	= src/event/
 MOB_DIR		= src/mob/
+BOSS_DIR	= src/boss/
+
+
+CFLAGS = -I/path/to/raylib/include
+LDFLAGS = -L/path/to/raylib/lib -lraylib -framework CoreFoundation -framework IOKit
 
 OBJ_DIR		= obj/
-RAYLIB_LIB	= -lraylib
+RAYLIB_LIB	= inc/raylib/src/libraylib-mac.a -framework CoreFoundation -framework IOKit -framework AppKit -framework OpenGL
 CC			= c++
 CFLAGS		= -g -Wall -Wextra -Werror -std=c++11 -I$(INC)
 
@@ -34,6 +39,7 @@ SRC			=	$(GAME_DIR)main.cpp \
 				$(EVENT_DIR)event.cpp \
 				$(EVENT_DIR)happening.cpp \
 				$(MOB_DIR)mob.cpp \
+				$(BOSS_DIR)boss.cpp \
 				$(MOB_DIR)action.cpp \
 
 OBJ 		= $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))

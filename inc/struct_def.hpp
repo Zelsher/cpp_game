@@ -5,6 +5,7 @@
 typedef struct s_texture_pack
 {
 	Texture2D		ennemy;
+	Texture2D		boss;
 }			t_texture_pack;
 
 typedef struct s_texture
@@ -21,6 +22,7 @@ typedef struct s_texture
 	Texture2D		bullet_1;
 	Texture2D		tile1;
 	Texture2D		tile2;
+	Texture2D		boss1;
 	Texture2D		item[10];
 	t_texture_pack	texture_pack;
 }			t_texture;

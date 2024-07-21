@@ -12,6 +12,10 @@ int	MOOVING()
 
 void	Game::HANDLE_Input(int id)
 {
+	//if (boss[0].HIT_Hitbox(player[id].GET_Pos()))
+	//	cout << "oui\n";
+	//else
+	//	cout << "non\n";
 	float m_speed = player[id].GET_Speed();
 	if (IsKeyDown(KEY_LEFT_SHIFT) && (player[id].GET_Stamina_V() > 20 || player[id].RUNNING()))
 	{
@@ -23,17 +27,17 @@ void	Game::HANDLE_Input(int id)
 	if (player[id].GET_Stamina_V() <= 0)
 		player[id].STOP_Run();
 
-	map[(int)player[id].GET_PosY()][(int)player[id].GET_PosX()].DELETE_Player();
+	map[(int)player[id].GET_Pos().y][(int)player[id].GET_Pos().x].DELETE_Player();
 //Handle Moove
 	if (IsKeyReleased(KEY_SPACE))
 		(void)player;//pause
-	if ((IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) && NOT_Wall(&map, player[id].GET_PosX() - m_speed * 2, player[id].GET_PosY()))
+	if ((IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) && NOT_Wall(&map, player[id].GET_Pos().x - m_speed * 2, player[id].GET_Pos().y))
 		player[id].ADD_PosX(-m_speed);
-	if ((IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) && NOT_Wall(&map, player[id].GET_PosX() + m_speed * 2, player[id].GET_PosY()))
+	if ((IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) && NOT_Wall(&map, player[id].GET_Pos().x + m_speed * 2, player[id].GET_Pos().y))
 		player[id].ADD_PosX(m_speed);
-	if ((IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) && NOT_Wall(&map, player[id].GET_PosX(), player[id].GET_PosY() - m_speed * 2))
+	if ((IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) && NOT_Wall(&map, player[id].GET_Pos().x, player[id].GET_Pos().y - m_speed * 2))
 		player[id].ADD_PosY(-m_speed);
-	if ((IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) && NOT_Wall(&map, player[id].GET_PosX(), player[id].GET_PosY() + m_speed * 2))
+	if ((IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) && NOT_Wall(&map, player[id].GET_Pos().x, player[id].GET_Pos().y + m_speed * 2))
 		player[id].ADD_PosY(m_speed);
 
 //Handle Mouse Click
@@ -52,8 +56,8 @@ void	Game::HANDLE_Input(int id)
 	if (IsKeyDown(KEY_R))
 		player[id].RELOAD_Weapons();
 	
-	map[(int)player[id].GET_PosY()][(int)player[id].GET_PosX()].MAP_Player(&player[id]);
+	map[(int)player[id].GET_Pos().y][(int)player[id].GET_Pos().x].MAP_Player(&player[id]);
 //Set Rotation
-	display.GET_Camera(id)->target = (Vector2){(player[id].GET_PosX() * TILE_SIZE - (WIDTH / 2) / display.GET_Camera(id)->zoom), (player[id].GET_PosY() * TILE_SIZE - (HEIGHT / 2) / display.GET_Camera(id)->zoom)};
-	player[id].SET_Dir(mouse_pos.x / TILE_SIZE - player[id].GET_PosX(), mouse_pos.y / TILE_SIZE - player[id].GET_PosY());
+	display.GET_Camera(id)->target = (Vector2){(player[id].GET_Pos().x * TILE_SIZE - (WIDTH / 2) / display.GET_Camera(id)->zoom), (player[id].GET_Pos().y * TILE_SIZE - (HEIGHT / 2) / display.GET_Camera(id)->zoom)};
+	player[id].SET_Dir(mouse_pos.x / TILE_SIZE - player[id].GET_Pos().x, mouse_pos.y / TILE_SIZE - player[id].GET_Pos().y);
 }
