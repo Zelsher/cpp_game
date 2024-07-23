@@ -46,5 +46,5 @@ class Boss
 		void		WAKE_Up() { sleeping = 0; }
 
 		bool		HIT_Hitbox(Vector2 pos);
-		int			UPDATE_Boss(vector<vector<Cell>> *map);
+		int			UPDATE_Boss(Map *map);
 };

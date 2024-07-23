@@ -15,7 +15,7 @@ void	Event::ADD_Event(int type, Vector2 origin_pos, Vector2 use_pos, Game *game,
 	last_happening++;
 }
 
-void	Event::UPDATE_EVENTS(vector<vector<Cell>> *map)
+void	Event::UPDATE_EVENTS(Map *map)
 {
 	for (int i = 0 ; i < last_happening ; i++)
 	{

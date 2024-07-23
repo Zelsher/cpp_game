@@ -36,8 +36,8 @@ class	Mob
 		Texture2D	GET_Texture(int id) const { (void)id; return texture->ennemy; }
 
 		int			COOLDOWN();
-		void		MOOVE_Ennemy(vector<vector<Cell>> *map);
-		void		MOOVE_Sleeper(vector<vector<Cell>> *map);
-		int			ACTION(vector<vector<Cell>> *map);
+		void		MOOVE_Ennemy(Map *map);
+		void		MOOVE_Sleeper(Map *map);
+		int			ACTION(Map *map);
 
 };

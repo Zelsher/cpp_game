@@ -27,7 +27,7 @@ int	Display::COUNT_Player(Player *player)
 	return (i);
 }
 
-void	Display::SET_Map(vector<vector<Cell>> *n_map, t_texture *map_texture, int width, int height)
+void	Display::SET_Map(Map *n_map, t_texture *map_texture, int width, int height)
 {
 	texture = map_texture;
 	map = n_map;
@@ -171,7 +171,6 @@ void	Display::DRAW_Boss()
 		if ((*boss)[i].SLEEPING())
 		{
 			n_lifebar += TILE_SIZE * 0.6;
-			cout << i << endl;
 			DrawRectangle(player->GET_Pos().x * TILE_SIZE - WIDTH / 2, player->GET_Pos().y * TILE_SIZE - HEIGHT / 2 + n_lifebar, WIDTH, TILE_SIZE * 0.5, DARKGRAY);
 			DrawRectangle(player->GET_Pos().x * TILE_SIZE - WIDTH / 2 + TILE_SIZE * 2, player->GET_Pos().y * TILE_SIZE - HEIGHT / 2 + n_lifebar + TILE_SIZE * 0.10, lifebar, TILE_SIZE * 0.30, RED);
 		}

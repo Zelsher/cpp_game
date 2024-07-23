@@ -15,7 +15,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <time.h>
-# include "raylib/src/raylib.h"
+# include <raylib.h>
+//# include "raylib/src/raylib.h"
 # include <cmath>
 # include <fstream>
 # include <vector>
@@ -25,6 +26,7 @@
 using namespace std;
 
 #include "struct_def.hpp"
+#include "display.hpp"
 #include "map.hpp"
 #include "player.hpp"
 #include "item.hpp"
@@ -33,61 +35,17 @@ using namespace std;
 #include "mob.hpp"
 #include "boss.hpp"
 
-class Display
-{
-	private:
-		Camera2D				camera;
-		Player					*player;
-		t_texture				*texture;
-		Event					*event;
-		vector<Mob>				*mobs;
-		vector<Boss>			*boss;
-		vector<vector<Cell>>	*map;
-
-		int						n_cam;
-		int						width;
-		int						height;
-		Vector2					display_Max;
-		Vector2					display_Min;
-
-		Vector2					display_size;//taille du fond afficher
-		int						map_width;
-		int						map_height;
-		
-	public:
-		Display(Player* player_list);
-		void		DRAW_Background();
-		void		DRAW_Player_Item(int id);
-		void		DRAW_Player(int id);
-		void		DRAW_Events();
-		void		DRAW_Mobs();
-		void		DRAW_Boss();
-
-		void		DISPLAY_Game(int id);
-		void		UPDATE_Image();
-
-		void		GET_Display_Width(int id);
-		void		UPDATE_Display();
-		int			COUNT_Player(Player *player);
-
-		Camera2D	*GET_Camera(int id) { (void)id; return (&camera); }
-		void		SET_Camera();
-		void		SET_Map(vector<vector<Cell>> *n_map, t_texture *map_texure, int width, int height);
-		void		SET_Event(Event *n_event, vector<Boss> *n_boss, vector<Mob> *n_mobs) { event = n_event; boss = n_boss; mobs = n_mobs; }
-};
-
 class Game
 {
 	private:
 		Player					player[2];
 		Display					display;
+		Map						map;
 		t_texture				texture;
 	
 		Event					event;
 		vector<Mob>				mobs;
 		vector<Boss>			boss;
-		vector<Vector3>			spawner;//z=proba
-		vector<vector<Cell>>	map;
 
 		size_t					frame;
 
@@ -102,7 +60,6 @@ class Game
 
 		void		HANDLE_Input(int id);
 		void		HANDLE_Click(Vector2 position, int id, int hand);
-		void		UPDATE_Spawner();
 		void		UPDATE_Game();
 		
 		int 		ADD_Player(string name);

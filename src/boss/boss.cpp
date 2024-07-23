@@ -1,6 +1,6 @@
 #include "../inc/game.hpp"
 
-int    Boss::UPDATE_Boss(vector<vector<Cell>> *map)
+int    Boss::UPDATE_Boss(Map *map)
 {
     Vector2 new_pos = pos;//changer par lalgo de deplacement
 
@@ -8,9 +8,9 @@ int    Boss::UPDATE_Boss(vector<vector<Cell>> *map)
     {
         for (int X = width * -1; X != width; X++)
         {
-            (*map)[pos.y + Y][pos.x + X].DELETE_Boss(this);
+            map->DELETE_Boss(this, Vector2{ pos.y + Y, pos.x + X});
             if (IN_Map(map, new_pos.x + X, new_pos.y + Y))
-                (*map)[new_pos.y + Y][new_pos.x + X].MAP_Boss(this);
+                map->MAP_Boss(this, Vector2{ pos.y + Y, pos.x + X});
         }
     }
     actual_texture = &texture->boss;

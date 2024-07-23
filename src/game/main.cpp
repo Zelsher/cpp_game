@@ -23,7 +23,6 @@ int	main()
 	magic_stick.SET_Item(MAGIC_STICK, game.GET_Player(0)->GET_Mana_p());
 	game.GET_Player(0)->ADD_Item(magic_stick);
 
-	game.CREATE_Boss(BOSS1, Vector2{10, 20});
 	game.CREATE_Boss(BOSS1, Vector2{10, 10});
 
 	while (!WindowShouldClose())

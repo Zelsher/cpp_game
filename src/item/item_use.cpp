@@ -50,7 +50,7 @@ int	Item::IS_Cooldown()
 }
 
 
-void	Item::USE(Vector2 player_pos, Vector2 use_pos, Player *player, vector<vector<Cell>> *map, Game *game)
+void	Item::USE(Vector2 player_pos, Vector2 use_pos, Player *player, Map *map, Game *game)
 {
 	(void)game;
 	use_pos.x /= TILE_SIZE;
@@ -92,7 +92,7 @@ void	Item::USE(Vector2 player_pos, Vector2 use_pos, Player *player, vector<vecto
 		{
 			ressource->ADD_Value(-4);
 			PlaySound(audio.use);
-			game->GET_Event()->ADD_Event(SHOOT, player_pos, use_pos, game, 4, damage);
+			game->GET_Event()->ADD_Event(SHOOT, player_pos, use_pos, game, 3, damage);
 		}
 		COOLDOWN();
 	}

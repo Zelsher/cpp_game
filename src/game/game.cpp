@@ -2,19 +2,6 @@
 
 //Game
 
-void	Game::UPDATE_Spawner()
-{
-	for (size_t i = 0; i < spawner.size(); i++)
-	{
-		//cout << spawner[i].z << endl;
-		if (spawner[i].z && rand()%9 + 1 < spawner[i].z)
-		{
-			//cout << spawner[i].x << " " << spawner[i].y << endl;
-			CREATE_Mob(ENNEMY, Vector2{spawner[i].x, spawner[i].y});
-		}
-	}
-}
-
 void	Game::UPDATE_Game()
 {
 	int	verif;
@@ -37,7 +24,9 @@ void	Game::UPDATE_Game()
 		{
 			verif = mobs[i].ACTION(&map);
 			if (verif == 0)
+			{
 				mobs.erase(mobs.begin() + i);
+			}
 		}
 		if (i < boss.size())
 		{
@@ -48,7 +37,7 @@ void	Game::UPDATE_Game()
 	}
 
 	if (frame % 50 == 0)
-		UPDATE_Spawner();
+		map.UPDATE_Spawner();
 
 	if (frame == 100000)
 		frame = 0;
@@ -59,13 +48,20 @@ void	Game::UPDATE_Game()
 		(void)player[0];
 }
 
-Game::Game() : display(player), frame(0)
+void	Game::CHOSE_Lvl()
+{
+	map.SET_Map("asset/map/map2");//@
+}
+
+Game::Game() : display(player), map(this) ,frame(0)
 {
 	InitWindow(WIDTH, HEIGHT, "game");
 	ClearBackground(BLACK);
 	SetTargetFPS(30);
 	InitAudioDevice();
 	CHOSE_Lvl();
+	display.SET_Map(&map, &texture, map.GET_Width_Map(), map.GET_Height_Map());
+	LOAD_Texture();
 	display.SET_Event(&event, &boss, &mobs);
 }
 

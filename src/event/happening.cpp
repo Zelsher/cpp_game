@@ -48,7 +48,7 @@ Happening::~Happening()
 {
 }
 
-int	Happening::UPDATE_Happening(vector<vector<Cell>> *map)
+int	Happening::UPDATE_Happening(Map *map)
 {
 	//cout << "[" << pos.y << "][" << pos.x << "]" << endl;
 	Player	*p_player;
@@ -68,7 +68,7 @@ int	Happening::UPDATE_Happening(vector<vector<Cell>> *map)
 	
 		pos.x += incrX;
 		pos.y += incrY;
-		p_player = (*map)[pos.y][pos.x].PLAYER_Near();
+		p_player = map->PLAYER_Near(pos);
 		if (p_player)
 		{
 			dist_x = p_player->GET_Pos().x - pos.x;
@@ -79,7 +79,7 @@ int	Happening::UPDATE_Happening(vector<vector<Cell>> *map)
 			return (0);
 		}
 		int i = 0;
-		while ((p_mob = (*map)[pos.y][pos.x].GET_Mob(i)))
+		while ((p_mob = map->GET_Mob(i, pos)))
 		{
 			dist_x = p_mob->GET_Pos().x - pos.x;
 			dist_y = p_mob->GET_Pos().y - pos.y;
@@ -90,7 +90,7 @@ int	Happening::UPDATE_Happening(vector<vector<Cell>> *map)
 			return (0);
 		}
 		i = 0;
-		if ((p_boss = (*map)[pos.y][pos.x].GET_Boss(i)))
+		if ((p_boss = map->GET_Boss(i, pos)))
 		{
 			if (p_boss->HIT_Hitbox(pos))
 			{

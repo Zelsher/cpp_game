@@ -76,7 +76,7 @@ class Item
 		int			RELOADING();
 		void		COOLDOWN();
 		int			IS_Cooldown();
-		void		USE(Vector2 player_pos, Vector2 use_pos, Player *t_player, vector<vector<Cell>> *map, Game *game);
+		void		USE(Vector2 player_pos, Vector2 use_pos, Player *t_player, Map *map, Game *game);
 	
 		bool		EMPTY() { return(empty); }
 };
